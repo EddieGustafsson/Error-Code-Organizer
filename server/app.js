@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const projectsRoutes = require('./api/routes/projects');
+const userRoutes = require('./api/routes/user');
 
 mongoose.connect(
     "mongodb+srv://" + process.env.MONGO_ATLAS_USERNAME + ":" +
