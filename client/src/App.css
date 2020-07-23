@@ -1,0 +1,12 @@
+.ui.top.attached.header {
+    background-color: #fafafa;
+}
+
+.menu-left {
+    padding-left: 15px;
+}
+
+.workarea {
+    margin-top: 1px !important;
+    min-height: 90vh;
+}
