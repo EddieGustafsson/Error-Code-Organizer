@@ -1,5 +1,4 @@
 import React from 'react';
-import Moment from 'moment';
 import Avatar from 'react-avatar';
 import Async from 'react-async';
 import ReactMarkdown from 'react-markdown';
@@ -7,7 +6,7 @@ import DataTable from 'react-data-table-component';
 import ReactTimeAgo from 'react-time-ago';
 import JavascriptTimeAgo from 'javascript-time-ago'
 
-import { Item, Segment, Message, Container, Header, Grid } from 'semantic-ui-react';
+import { Item, Segment, Message, Header, Grid } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import en from 'javascript-time-ago/locale/en'
 
