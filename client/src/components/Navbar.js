@@ -14,9 +14,9 @@ function Navbar() {
 
             <Dropdown item text='More'>
               <Dropdown.Menu>
-                <Dropdown.Item>Electronics</Dropdown.Item>
-                <Dropdown.Item>Automotive</Dropdown.Item>
-                <Dropdown.Item>Home</Dropdown.Item>
+                <Dropdown.Item>Test1</Dropdown.Item>
+                <Dropdown.Item>Test2</Dropdown.Item>
+                <Dropdown.Item>Test3</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
 
