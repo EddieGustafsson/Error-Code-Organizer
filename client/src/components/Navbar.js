@@ -16,7 +16,6 @@ function Navbar() {
               <Dropdown.Menu>
                 <Dropdown.Item>Test1</Dropdown.Item>
                 <Dropdown.Item>Test2</Dropdown.Item>
-                <Dropdown.Item>Test3</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
 
