@@ -2,68 +2,15 @@ import React from 'react';
 import Async from 'react-async';
 import Moment from 'moment';
 import Avatar from 'react-avatar';
-import { Header, Segment, Message, Icon, Grid, List, Feed, Label } from 'semantic-ui-react';
+import { Header, Segment, Message, Icon, Grid, List, Feed } from 'semantic-ui-react';
 import ReactMarkdown from 'react-markdown';
-import DataTable from 'react-data-table-component';
+import ErrorCodesTable from '../components/tables/ErrorCodesTable';
 
 function Post({match}) {
 
   const fetchProject = () => fetch(`/v1/project/${match.params.id}`)
                           .then(res => (res.ok ? res : Promise.reject))
                           .then(res => res.json());
-  const columns = [
-    {
-        name: 'Code',
-        selector: 'code',
-        sortable: true,
-    },
-    {
-      name: 'Location',
-      selector: 'location',
-      sortable: true,
-      cell: row => <Label basic as='a'>{row.location}</Label>,
-    },
-    {
-      name: 'Message',
-      selector: 'message',
-      sortable: true,
-    },
-    {
-      name: 'Description',
-      selector: 'description',
-      sortable: true,
-    },
-    {
-        name: 'Last updated at',
-        selector: 'last_updated_at',
-        sortable: true,
-        right: true,
-        cell: row => Moment(row.date).format('YYYY-MM-DD, HH:MM'),
-    },
-  ];
-
-  const codesData = [
-    {
-      _id: '5f10857ab05692345c9ddabk',
-      project_id: '5f10857ab05692345c9ddabe',
-      code: '0x80020018',
-      location: 'AccountCreation',
-      message: 'Invalid name. Enter a new name.',
-      description: 'Test',
-      last_updated_at: '2020-07-19',
-      created_at: '2020-07-19'
-    },
-    {
-      _id: '5f10857ab05692345c9ddabl',
-      project_id: '5f10857ab05692345c9ddabe',
-      code: '0x80020019',
-      location: 'FileUpload',
-      message: 'Memory full.',
-      description: 'Test',
-      last_updated_at: '2020-07-19',
-      created_at: '2020-07-19'
-    }
-  ];
 
   return (
     <Async promiseFn={fetchProject}>
@@ -133,13 +80,7 @@ function Post({match}) {
 
                     <Header as='h5' attached='top'>Error codes</Header>
                     <Segment attached='bottom'>
-                      <DataTable
-                            columns={columns}
-                            data={codesData}
-                            noHeader={true}
-                            striped={true}
-                            pagination
-                        />
+                      <ErrorCodesTable projectId={match.params.id} />
                     </Segment>
 
                     <Header as='h5' attached='top'>Description</Header>
