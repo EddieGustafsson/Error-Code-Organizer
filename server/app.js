@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const projectsRoutes = require('./api/routes/projects');
+const errorCodesRoutes = require('./api/routes/error_codes');
+const errorCodeRoutes = require('./api/routes/error_code');
 const userRoutes = require('./api/routes/user');
 
 mongoose.connect(
@@ -36,7 +38,9 @@ app.use((req, res, next) => {
 });
 
 //Routes which should handle requests
-app.use('/v1/project', projectsRoutes)
+app.use('/v1/project', projectsRoutes);
+app.use('/v1/error_codes', errorCodesRoutes);
+app.use('/v1/error_code', errorCodeRoutes);
 app.use('/v1/user', userRoutes);
 
 
