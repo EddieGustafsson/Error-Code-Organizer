@@ -14,6 +14,7 @@ mongoose.connect(
     process.env.MONGO_ATLAS_PWD +
     "@cluster0-fb0ts.gcp.mongodb.net/dev1?retryWrites=true&w=majority", {
         useNewUrlParser: true,
+        useCreateIndex: true,
         useUnifiedTopology: true
     }
 );
