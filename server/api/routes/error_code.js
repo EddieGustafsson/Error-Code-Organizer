@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const Project = require('../models/projectModel');
 const ErrorCode = require('../models/errorCodeModel');
 
-router.get("/:errorcodeId", (req, res, next) => {
-    ErrorCode.find({_id: req.params.errorcodeId})
+router.get("/:errorCodeId", (req, res, next) => {
+    ErrorCode.find({_id: req.params.errorCodeId})
     .select()
     .populate('Project')
     .exec()
@@ -67,5 +67,42 @@ router.post('/', (req, res, next) => {
             })
         });
 });
+
+router.patch("/:errorCodeId", (req, res, next) => {
+    const id = req.params.errorCodeId;
+
+    ErrorCode.updateMany({_id: id}, {last_updated_at: new Date()}, {$set: req.body})
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            message: 'Error code updated'
+        });
+
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({
+            error: error
+        });
+    });
+});
+
+router.delete('/:errorCodeId', (req, res, next) => {
+    const id = req.params.errorCodeId;
+    
+    ErrorCode.remove({_id: id})
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            message: 'Error code delted'
+        });
+    })
+    .catch(error => {
+        console.log(error);
+        res.status.apply(500).json({
+            error: error
+        })
+    });
+})
 
 module.exports = router;
