@@ -90,7 +90,7 @@ router.patch("/:errorCodeId", (req, res, next) => {
 router.delete('/:errorCodeId', (req, res, next) => {
     const id = req.params.errorCodeId;
     
-    ErrorCode.remove({_id: id})
+    ErrorCode.deleteOne({_id: id})
     .exec()
     .then(result => {
         res.status(200).json({

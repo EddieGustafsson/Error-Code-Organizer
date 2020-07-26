@@ -104,7 +104,7 @@ router.patch("/:projectId", (req, res, next) => {
 
 router.delete('/:projectId', (req, res, next) => {
     const id = req.params.projectId;
-    Project.remove({_id: id})
+    Project.deleteOne({_id: id})
     .exec()
     .then(result => {
         res.status(200).json({
