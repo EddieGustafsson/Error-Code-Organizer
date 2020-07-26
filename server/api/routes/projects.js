@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-const checkAuth = require('../auth/check-auth');
+const checkAuth = require('../controllers/auth');
 
 const Project = require("../models/projectModel");
 
@@ -83,22 +83,14 @@ router.get('/:projectId', (req, res, next) => {
     });
 });
 
-router.patch("/:serviceId", checkAuth, (req, res, next) => {
-    const id = req.params.serviceId;
-    const updateOps = {};
-    for (const ops of req.body){
-        updateOps[ops.propName] = ops.value;
-    }
-    Service.update({_id: id}, {$set: updateOps})
+router.patch("/:projectId", (req, res, next) => {
+    const id = req.params.projectId;
+
+    Project.updateMany({_id: id}, {last_updated_at: new Date()}, {$set: req.body})
     .exec()
     .then(result => {
-        console.log(result);
         res.status(200).json({
-            message: 'Service updated',
-            request: {
-                type: 'GET',
-                url: 'http://'+ process.env.HOST + ":" + process.env.PORT +'/services/' + id
-            }
+            message: 'Project updated'
         });
 
     })
@@ -110,18 +102,13 @@ router.patch("/:serviceId", checkAuth, (req, res, next) => {
     });
 });
 
-router.delete('/:serviceId', checkAuth, (req, res, next) => {
-    const id = req.params.serviceId;
-    Service.remove({_id: id})
+router.delete('/:projectId', (req, res, next) => {
+    const id = req.params.projectId;
+    Project.remove({_id: id})
     .exec()
     .then(result => {
         res.status(200).json({
-            message: 'Service delted',
-            request: {
-                type: 'POST',
-                url: 'http://'+ process.env.HOST + ":" + process.env.PORT +'/services',
-                body: {name: 'String', userId: 'Number', type: 'String'}
-            }
+            message: 'Project delted'
         });
     })
     .catch(error => {
