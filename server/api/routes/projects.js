@@ -7,7 +7,7 @@ const Project = require("../models/projectModel");
 
 router.get('/', (req, res, next) => {
     Project.find()
-    .select('_id title date description type')
+    .select('_id title date description last_updated_at created_at')
     .populate('projects')
     .exec()
     .then(docs => {
@@ -18,8 +18,8 @@ router.get('/', (req, res, next) => {
                     _id: doc._id,
                     title: doc.title,
                     description: doc.description,
-                    date: doc.date,
-                    type: doc.type,
+                    last_updated_at: doc.last_updated_at,
+                    created_at: doc.created_at
                 }
             })
         };
@@ -37,14 +37,15 @@ router.post('/', (req, res, next) => {
     const project = new Project({
         _id: new mongoose.Types.ObjectId(),
         title: req.body.title,
-        date: req.body.date,
         description: req.body.description,
-        type: req.body.type
+        type: req.body.type,
+        last_updated_at: new Date(),
+        created_at: new Date()
     });
     project.save().then(result => {
         res.status(201).json({
             message: 'Project were created',
-            createdService: {
+            createdProject: {
                 title: result.title,
                 _id: result._id
             }
