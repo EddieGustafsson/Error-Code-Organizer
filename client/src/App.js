@@ -34,9 +34,9 @@ function App() {
                 <Header as='h5' attached='top'>
                   <Breadcrumb />
                 </Header>
-                <Segment attached style={{minHeight: '91vh'}}>
+                <Segment attached raised style={{minHeight: '100%'}}>
                   <Switch>
-                    <Route path="/" exact component={Dashboard} />
+                    <Route path="/" exact component={Dashboard}/>
                     <Route path="/projects" component={Projects} />
                     <Route exact path="/project/:id" component={Project}/>
                     <Route exact path="/project/:id/activity" component={ProjectActivity}/>
