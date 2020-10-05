@@ -1,0 +1,35 @@
+version: '3'
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - '80:80'
+      - '443:443'
+  api:
+    restart: always  
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    volumes: 
+      - /app/node_modules
+      - ./server:/app
+    environment: 
+      - MONGO_ATLAS_USERNAME=null
+      - MONGO_ATLAS_PWD=null
+      - HOST=example.com
+      - PORT=8443
+      - CORS_ORIGIN=https://example.com
+    ports:
+      - '8443:8443'
+  client:
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    links:
+      - api

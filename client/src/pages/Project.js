@@ -5,10 +5,11 @@ import Avatar from 'react-avatar';
 import { Header, Segment, Message, Icon, Grid, List, Feed } from 'semantic-ui-react';
 import ReactMarkdown from 'react-markdown';
 import ErrorCodesTable from '../components/tables/ErrorCodesTable';
+import API from "../api/apiMap";
 
 function Post({match}) {
 
-  const fetchProject = () => fetch(`/v1/project/${match.params.id}`)
+  const fetchProject = () => fetch(API.project + match.params.id)
                           .then(res => (res.ok ? res : Promise.reject))
                           .then(res => res.json());
 
@@ -59,7 +60,7 @@ function Post({match}) {
                         </List.Item>
                         <List.Item>
                           <List.Content>
-                          <Icon disabled name='calendar alternate outline' /><b>{Moment(data.project.date).format('YYYY-MM-DD')}</b>
+                          <Icon disabled name='calendar alternate outline' /><b>{Moment(data.project.created_at).format('YYYY-MM-DD')}</b>
                           </List.Content>
                         </List.Item>
                       </List>

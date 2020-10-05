@@ -62,7 +62,7 @@ router.post('/', (req, res, next) => {
 router.get('/:projectId', (req, res, next) => {
     const id = req.params.projectId;
     Project.findById(id)
-    .select('_id title date description type')
+    .select('_id title description last_updated_at created_at')
     .populate('project')
     .exec()
     .then(doc => {

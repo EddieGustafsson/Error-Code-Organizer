@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const projectsRoutes = require('./api/routes/projects');
 const errorCodesRoutes = require('./api/routes/error_codes');
@@ -19,7 +20,13 @@ mongoose.connect(
     }
 );
 
+const corsOptions =  {
+    origin: process.env.CORS_ORIGIN
+};
+app.use(cors(corsOptions));
+
 app.use(morgan('short'));
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));

@@ -1,10 +1,11 @@
 import React from 'react';
 import Async from 'react-async';
 import { Segment, Message, Tab, Feed, Grid, Icon } from 'semantic-ui-react';
+import API from "../api/apiMap";
 
 function ProjectActivity({match}) {
 
-    const fetchProject = () => fetch(`/v1/project/${match.params.id}`)
+    const fetchProject = () => fetch(API.project + match.params.id)
                           .then(res => (res.ok ? res : Promise.reject))
                           .then(res => res.json());
 

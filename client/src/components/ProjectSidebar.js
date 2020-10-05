@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Async from 'react-async'
 import Avatar from 'react-avatar'
 import { NavLink } from 'react-router-dom'
-import { Accordion, Form, Menu, Segment } from 'semantic-ui-react'
+import { Accordion, Menu, Segment, Message } from 'semantic-ui-react'
+import API from "../api/apiMap";
 
 export default class ProjectSidebar extends Component {
   state = { activeIndex: 0 }
@@ -19,35 +20,19 @@ export default class ProjectSidebar extends Component {
     const { activeIndex } = this.state;
     const projectId = this.props.match.params.id;
 
-    const fetchProject = () => fetch(`/v1/project/${projectId}`)
+    const fetchProject = () => fetch(API.project + projectId)
                   .then(res => (res.ok ? res : Promise.reject))
                   .then(res => res.json());
     
     const ProjectOverview = (
-      <Menu secondary vertical>
+      <Menu secondary vertical style={{width: '100%'}}>
           <Menu.Item name='Details' as={NavLink} activeClassName="active" exact to={`/project/${projectId}`}/>
-          <Menu.Item name='Activity' as={NavLink} activeClassName="active" to={`/project/${projectId}/activity`}/>
+          <Menu.Item name='Activity' as={NavLink} activeClassName="active" exact to={`/project/${projectId}/activity`}/>
       </Menu>
-    )
-    
-    const ColorForm = (
-      <Form>
-        <Form.Group grouped>
-          <Form.Checkbox label='Red' name='color' value='red' />
-          <Form.Checkbox label='Orange' name='color' value='orange' />
-          <Form.Checkbox label='Green' name='color' value='green' />
-          <Form.Checkbox label='Blue' name='color' value='blue' />
-        </Form.Group>
-      </Form>
     )
 
     return (
     <Async promiseFn={fetchProject}>
-
-      <Async.Loading>
-        <Segment loading style={{minHeight: '100vh'}}></Segment>
-      </Async.Loading>
-
       <Async.Fulfilled>
 
         {data => {
@@ -73,7 +58,7 @@ export default class ProjectSidebar extends Component {
                     <Accordion.Content active={activeIndex === 0} content={ProjectOverview} />
                 </Menu.Item>
 
-                <Menu.Item active={activeIndex === 1}>
+                <Menu.Item as={NavLink} activeClassName="active" exact to={`/project/${projectId}/settings`}>
                     <Accordion.Title
                         icon='settings'
                         active={activeIndex === 1}
@@ -81,7 +66,6 @@ export default class ProjectSidebar extends Component {
                         index={1}
                         onClick={this.handleClick}
                     />
-                    <Accordion.Content active={activeIndex === 1} content={ColorForm} />
                 </Menu.Item>
 
               </Accordion>
@@ -92,7 +76,11 @@ export default class ProjectSidebar extends Component {
       </Async.Fulfilled>
 
       <Async.Rejected>
-
+        <Message 
+            error
+            header='Could not fetch project'
+            content='Reload the page and try again.'
+        />
       </Async.Rejected>
 
     </Async>
