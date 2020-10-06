@@ -1,4 +1,4 @@
-# ECO: Error Code Organizer [1.0.0]
+# ECO: Error Code Organizer
 ![Client](https://github.com/EddieGustafsson/Error-Code-Organizer/workflows/Client/badge.svg)
 
 This project is under development, therefore some placeholder code can be found and important functions non-existent.
