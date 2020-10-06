@@ -71,7 +71,7 @@ Run the the following command in a command line:
 
 ```npm install```
 
-#### 3. Setup enviroment varibales
+#### 3. Setup enviroment variables
 ##### Client
 1. Create a .env file in the client folder
 2. Type the following variables in the file:
