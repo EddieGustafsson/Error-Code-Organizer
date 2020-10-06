@@ -47,7 +47,7 @@ ECO application uses a mongoDB cluster, therefore you need to create your own mo
 ### Production build
 This project is not yet fully configured to run a production build using the existing docker-compose. Although you can't run the production build via docker-compose, you can successfully run and build the individual docker container. To build a specific docker container image, do the following:
 
-#### 1. Select service to build
+#### 1. Select a service to build
 The project contains three important folders - client, server and nginx. These folders specify each ECO service and contain one file called Dockerfile.
 
 #### 2. Build the service docker image
