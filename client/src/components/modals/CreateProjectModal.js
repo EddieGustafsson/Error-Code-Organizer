@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Modal, Button, Icon, Form, Message } from 'semantic-ui-react'
-
+import API from "../../api/apiMap";
 
 export default class CreateProjectModal extends Component {
 
@@ -63,8 +63,6 @@ export default class CreateProjectModal extends Component {
             date: new Date()
         }
 
-        console.log(project);
-
         this.createProject(project);
     }
 
@@ -75,7 +73,7 @@ export default class CreateProjectModal extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(project)
         };
-        fetch('/v1/project', requestOptions)
+        fetch(API.project, requestOptions)
             .then(async response => {
                 if(!response.ok) {
                     this.setState({ formError: true, formLoading: false });
