@@ -11,13 +11,11 @@ import CreateErrorCodeModal from '../modals/CreateErrorCodeModal';
 
 export default class ErrorCodesTable extends Component {
     render() {
+
         const projectId = this.props.projectId;
+        const errorCodeData = this.props.errorCodeData;
 
         JavascriptTimeAgo.addLocale(en);
-
-        const fetchErrorCodes = () => fetch( API.error_codes + projectId)
-                      .then(res => (res.ok ? res : Promise.reject))
-                      .then(res => res.json());
     
         const columns = [
             {
@@ -42,7 +40,7 @@ export default class ErrorCodesTable extends Component {
               sortable: true,
             },
             {
-                name: 'Last updated at',
+                name: 'Last updated',
                 selector: 'last_updated_at',
                 sortable: true,
                 right: true,
@@ -58,42 +56,19 @@ export default class ErrorCodesTable extends Component {
                                 </Button>;
     
         return (
-            <Async promiseFn={fetchErrorCodes}>
-                <Async.Loading>
-                    <Segment loading vertical>
-                        <br></br>
-                        <br></br>
-                    </Segment>
-                </Async.Loading>
-    
-                <Async.Fulfilled>
-                    {data => {
-                        return (
-                        <div>
-                            <DataTable
-                                columns={columns}
-                                data={data.error_codes}
-                                noHeader={false}
-                                striped={true}
-                                actions={actions}
-                                contextActions={contextActions}
-                                selectableRows
-                                highlightOnHover
-                                pagination
-                            />
-                        </div>
-                        )
-                    }}
-                </Async.Fulfilled>
-    
-                <Async.Rejected>
-                  <Message 
-                      error
-                      header='Could not fetch error codes'
-                      content='Reload the page and try again.'
-                  />
-                </Async.Rejected>
-            </Async>
+            <div>
+                <DataTable
+                    columns={columns}
+                    data={errorCodeData}
+                    noHeader={false}
+                    striped={true}
+                    actions={actions}
+                    contextActions={contextActions}
+                    selectableRows
+                    highlightOnHover
+                    pagination
+                />
+            </div>
         );
     }
 }

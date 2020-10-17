@@ -50,7 +50,7 @@ function Post({match}) {
                       <List horizontal size='small'>
                         <List.Item>
                           <List.Content>
-                            <Icon disabled name='exclamation triangle' /><b>2</b> Error codes
+                            <Icon disabled name='exclamation triangle' /><b>{data.project.error_codes.length}</b> Error codes
                           </List.Content>
                         </List.Item>
                         <List.Item>
@@ -81,7 +81,7 @@ function Post({match}) {
 
                     <Header as='h5' attached='top'>Error codes</Header>
                     <Segment attached='bottom'>
-                      <ErrorCodesTable projectId={match.params.id} />
+                      <ErrorCodesTable projectId={data.project._id} errorCodeData={data.project.error_codes} />
                     </Segment>
 
                     <Header as='h5' attached='top'>Description</Header>
