@@ -5,8 +5,7 @@ const Project = require("../models/projectModel");
 module.exports = {
     index: async(req, res, next) => {
         Project.find()
-        .select('_id title date description last_updated_at created_at')
-        .populate('projects')
+        .populate('error_codes')
         .exec()
         .then(docs => {
             const response = {
@@ -16,6 +15,7 @@ module.exports = {
                         _id: doc._id,
                         title: doc.title,
                         description: doc.description,
+                        error_codes: doc.error_codes.length,
                         last_updated_at: doc.last_updated_at,
                         created_at: doc.created_at
                     }

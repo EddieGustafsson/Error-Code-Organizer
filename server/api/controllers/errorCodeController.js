@@ -7,7 +7,6 @@ module.exports = {
     index: async(req, res, next) => {
         ErrorCode.find({project_id: req.params.projectId})
         .select()
-        .populate('Project')
         .exec()
         .then(docs => {
             const response = {
@@ -42,8 +41,11 @@ module.exports = {
                     message: "Project not found"
                 });
             }
+
+            const error_code_id = mongoose.Types.ObjectId();
+
             const error_code = new ErrorCode({
-                _id: mongoose.Types.ObjectId(),
+                _id: error_code_id,
                 project_id: req.body.project_id,
                 code: req.body.code,
                 location: req.body.location,
@@ -52,6 +54,17 @@ module.exports = {
                 last_updated_at: req.body.last_updated_at,
                 created_at: req.body.created_at
             });
+
+            // Adds the error code id to the project document.
+            Project.updateMany({_id: req.body.project_id}, {$push: {error_codes: error_code_id}})
+            .exec()
+            .catch(error => {
+                console.log(error);
+                res.status(500).json({
+                    error: error
+                });
+            });
+
             return error_code.save()
         })
         .then(result => {
@@ -119,6 +132,17 @@ module.exports = {
         ErrorCode.deleteOne({_id: id})
         .exec()
         .then(result => {
+
+            // Removes the error code id from the project document.
+            Project.updateMany({_id: req.body.project_id}, {$pull: {error_codes: error_code_id}})
+            .exec()
+            .catch(error => {
+                console.log(error);
+                res.status(500).json({
+                    error: error
+                });
+            });
+
             res.status(200).json({
                 message: 'Error code delted'
             });
