@@ -58,8 +58,8 @@ module.exports = {
     getProject: async(req, res, next) => {
         const id = req.params.projectId;
         Project.findById(id)
-        .select('_id title description last_updated_at created_at')
-        .populate('project')
+        .select('_id title description error_codes last_updated_at created_at')
+        .populate('error_codes')
         .exec()
         .then(doc => {
             if(doc){
