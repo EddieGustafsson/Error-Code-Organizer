@@ -13,7 +13,7 @@ const userRoutes = require('./api/routes/user');
 mongoose.connect(
     "mongodb+srv://" + process.env.MONGO_ATLAS_USERNAME + ":" +
     process.env.MONGO_ATLAS_PWD +
-    "@cluster0.e5eec.gcp.mongodb.net/dev1?retryWrites=true&w=majority", {
+    "@cluster0.y7cv7.gcp.mongodb.net/eco?retryWrites=true&w=majority", {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true

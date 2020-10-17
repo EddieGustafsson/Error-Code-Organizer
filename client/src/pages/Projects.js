@@ -27,7 +27,7 @@ const columns = [
         cell: row => <div><Avatar maxInitials='1' name={row.title} verticalAlign='middle' size='30px' round='5px'/><Link to={`/project/${row._id}`}> {row.title}</Link></div>,
     },
     {
-        name: 'Last updated at',
+        name: 'Last updated',
         selector: 'date',
         sortable: true,
         right: true,
