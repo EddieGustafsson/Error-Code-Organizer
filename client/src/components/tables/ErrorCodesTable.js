@@ -40,7 +40,7 @@ export default class ErrorCodesTable extends Component {
               sortable: true,
             },
             {
-                name: 'Last updated at',
+                name: 'Last updated',
                 selector: 'last_updated_at',
                 sortable: true,
                 right: true,
