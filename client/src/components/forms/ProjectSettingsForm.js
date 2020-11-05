@@ -5,9 +5,7 @@ export default class ProjectSettingsForm extends Component {
 
     constructor(props) {
         super(props);
-
-        console.log(this.props.data)
-
+        
         this.state = { 
 
             title: this.props.data.project.title, 
@@ -48,7 +46,7 @@ export default class ProjectSettingsForm extends Component {
             title: this.state.title,
             description: this.state.description
         }
-
+        console.log(JSON.stringify(project));
         this.patchProject(project);
     }
 
