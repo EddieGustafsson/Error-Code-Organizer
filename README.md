@@ -20,18 +20,18 @@ No public documentation will be provided as of now.
 
 ## Demo pictures
 ### Projects
-![](https://i.imgur.com/H7kLFd4.png)
+![](https://i.imgur.com/HL4EWt0.png)
 
 ### Project details
-![](https://i.imgur.com/ImvoZUR.png)
+![](https://i.imgur.com/nJ2ToRZ.png)
 
 ### Project activity
-![](https://i.imgur.com/fwtuiwE.png)
+![](https://i.imgur.com/803ZNYW.png)
 
 ### Project settings
-![](https://i.imgur.com/jhEnwd9.png)
+![](https://i.imgur.com/Dxp2ZGO.png)
 
-![](https://i.imgur.com/p2u0glq.png)
+![](https://i.imgur.com/sOnkHA9.png)
 
 ## Prerequisites
 ### Node.js
