@@ -3,6 +3,7 @@ import Async from 'react-async';
 import { Segment, Message, Button, Tab, Grid, Header } from 'semantic-ui-react';
 import API from "../api/apiMap";
 import ProjectSettingsForm from "../components/forms/ProjectSettingsForm";
+import RemoveProjectModal from "../components/modals/RemoveProjectModal";
 
 function ProjectSettings({match}) {
 
@@ -46,7 +47,7 @@ function ProjectSettings({match}) {
             <Message>
                 <Header as='h3' color='red'>Remove project</Header>
                 <p>Once you remove a project, there is no going back. Please be certain. </p>
-                <Button color='red'>Remove project</Button>
+                <RemoveProjectModal projectId={match.params.id} />
             </Message>
         </Tab.Pane>
     ]
