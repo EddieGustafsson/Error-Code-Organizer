@@ -10,6 +10,7 @@ No public documentation will be provided as of now.
     * [Project details](#project-details)
     * [Project activity](#project-activity)
     * [Project settings](#project-settings)
+    * [Login](#login)
 * [Prerequisites](#prerequisites)
     * [Node.js](#node.js)
     * [Docker](#docker)
@@ -20,18 +21,21 @@ No public documentation will be provided as of now.
 
 ## Demo pictures
 ### Projects
-![](https://i.imgur.com/HL4EWt0.png)
+![](https://i.imgur.com/nP45Zbs.png)
 
 ### Project details
-![](https://i.imgur.com/nJ2ToRZ.png)
+![](https://i.imgur.com/8IhYfVO.png)
 
 ### Project activity
-![](https://i.imgur.com/803ZNYW.png)
+![](https://i.imgur.com/mFjRRt3.png)
 
 ### Project settings
-![](https://i.imgur.com/Dxp2ZGO.png)
+![](https://i.imgur.com/MVKmRRo.png)
 
-![](https://i.imgur.com/sOnkHA9.png)
+![](https://i.imgur.com/qxki5xF.png)
+
+### Login
+![](https://i.imgur.com/VwlJ2ax.png)
 
 ## Prerequisites
 ### Node.js
