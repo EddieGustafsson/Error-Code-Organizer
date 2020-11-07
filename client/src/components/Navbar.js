@@ -1,13 +1,15 @@
 import React from 'react';
-import { Menu, Segment, Input, Dropdown, Image } from 'semantic-ui-react'
+import { Menu, Segment, Input, Dropdown, Icon } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
-import Logo from '../ECO-logo.png'
 
 function Navbar() {
       return (
         <Segment inverted raised color='violet' attached='bottom'>
           <Menu inverted fluid secondary>
-            <Image src={Logo} width='5%' height='5%'></Image>
+            <Menu.Item name='eco'>
+                <Icon name='file code' color='white' size='big' />
+                ECO
+            </Menu.Item>
 
             <Menu.Item as={NavLink} activeClassName="active" exact to='/' name='dashboard'>Dashboard</Menu.Item>
             <Menu.Item as={NavLink} activeClassName="active" to='/projects' name='projects'>Projects</Menu.Item>
