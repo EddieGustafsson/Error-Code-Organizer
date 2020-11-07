@@ -10,7 +10,7 @@ const errorCodesRoutes = require('./api/routes/error_codes');
 const errorCodeRoutes = require('./api/routes/error_code');
 const authRoutes = require('./api/routes/auth');
 
-const auth = require('./api/controllers/auth');
+const auth = require('./api/middleware/auth');
 
 mongoose.connect(
     "mongodb+srv://" + process.env.MONGO_ATLAS_USERNAME + ":" +
