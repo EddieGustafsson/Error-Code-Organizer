@@ -1,47 +1,36 @@
 import React, { Component } from 'react'
 import { Modal, Button, Icon, Form, Message } from 'semantic-ui-react'
-import API from "../../api/apiMap";
 
-export default class CreateProjectModal extends Component {
+import { connect } from 'react-redux';
+import { createProject, getProjects } from '../../actions/projectActions';
+import PropTypes from 'prop-types';
 
-    constructor(props) {
-        super(props);
+class CreateProjectModal extends Component {
+    state = { 
+        modalOpen: false, 
+        
+        title: '', 
+        description: '',
 
-        this.state = { 
-            modalOpen: false, 
-            
-            title: '', 
-            description: '',
+        formLoading: false,
+        formSuccess: false,
 
-            formLoading: false,
-            formSuccess: false,
+        titleError: false,
+        descriptionError: false, 
+        formError: false
+    };
 
-            titleError: false,
-            descriptionError: false, 
-            formError: false
-        };
-
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.submitProjectForm = this.submitProjectForm.bind(this);
-        this.createProject = this.createProject.bind(this);
-    }
-  
     handleOpen = () => this.setState({ modalOpen: true })
   
     handleClose = () => this.setState({ modalOpen: false })
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.name === 'test' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-          [name]: value    
-        });
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
-    submitProjectForm() {
+    submitProjectForm = (e) => {
         let error = false;
+        e.preventDefault();
 
         this.setState({ formLoading: true });
 
@@ -63,27 +52,10 @@ export default class CreateProjectModal extends Component {
             date: new Date()
         }
 
-        this.createProject(project);
-    }
-
-    createProject(project) {
-        // POST request using fetch with error handling
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(project)
-        };
-        fetch(API.project, requestOptions)
-            .then(async response => {
-                if(!response.ok) {
-                    this.setState({ formError: true, formLoading: false });
-                } else {
-                    this.setState({ formError: false, formSuccess: true, formLoading: false });
-                }
-            })
-            .catch(error => {
-                this.setState({ formError: true, formLoading: false });
-            });
+        this.props.createProject(project);
+        this.props.getProjects(); //TODO: Need to fix delay
+        this.setState({ formSuccess: true });
+        this.setState({ formLoading: false });
     }
 
     render() {
@@ -106,7 +78,7 @@ export default class CreateProjectModal extends Component {
                                 placeholder='My awsome project'
                                 name='title'
                                 value={this.state.title}
-                                onChange={this.handleInputChange}
+                                onChange={this.onChange}
                                 error={this.state.titleError}
                             />
                         </Form.Field>
@@ -115,8 +87,7 @@ export default class CreateProjectModal extends Component {
                                 label='Project description (optional)' 
                                 placeholder='Description format' 
                                 name='description'
-                                value={this.state.description}
-                                onChange={this.handleInputChange}
+                                onChange={this.onChange}
                                 error={this.state.descriptionError}
                             />
                         </Form.Field>
@@ -150,3 +121,9 @@ export default class CreateProjectModal extends Component {
         )
     }
   }
+
+const mapStateToProps = state => ({
+    project: state.project
+});
+
+export default connect(mapStateToProps, { createProject, getProjects })(CreateProjectModal);
