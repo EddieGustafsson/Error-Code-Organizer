@@ -46,7 +46,7 @@ class Projects extends Component {
     }
 
     render() {
-        const { projects } = this.props.project.response;
+        const { projects } = this.props.project.projects;
         return (
             <div>
                 <Segment vertical>

@@ -38,6 +38,7 @@ export const createProject = (project) => dispatch => {
             type: CREATE_PROJECT,
             payload: res.data
         }));
+    dispatch(getProjects());
 }
 
 export const updateProject = (id, project) => dispatch => {

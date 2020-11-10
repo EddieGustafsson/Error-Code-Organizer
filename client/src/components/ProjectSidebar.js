@@ -1,12 +1,25 @@
 import React, { Component } from 'react'
-import Async from 'react-async'
+import { connect } from 'react-redux';
+import { getProject } from '../actions/projectActions';
+import PropTypes from 'prop-types';
 import Avatar from 'react-avatar'
 import { NavLink } from 'react-router-dom'
-import { Accordion, Menu, Segment, Message } from 'semantic-ui-react'
-import API from "../api/apiMap";
+import { Accordion, Menu, Segment, Placeholder } from 'semantic-ui-react'
 
-export default class ProjectSidebar extends Component {
-  state = { activeIndex: 0 }
+class ProjectSidebar extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+        id : this.props.match.params.id,
+        activeIndex: 0
+    }
+  }
+
+  componentDidMount() {
+      this.props.getProject(this.state.id);
+  }
 
   handleClick = (e, titleProps) => {
     const { index } = titleProps
@@ -18,72 +31,100 @@ export default class ProjectSidebar extends Component {
 
   render() {
     const { activeIndex } = this.state;
-    const projectId = this.props.match.params.id;
+    const { project } = this.props.project.project;
+    const loading = this.props.project.loading;
 
-    const fetchProject = () => fetch(API.project + projectId)
-                  .then(res => (res.ok ? res : Promise.reject))
-                  .then(res => res.json());
-    
     const ProjectOverview = (
       <Menu secondary vertical style={{width: '100%'}}>
-          <Menu.Item name='Details' as={NavLink} activeClassName="active" exact to={`/project/${projectId}`}/>
-          <Menu.Item name='Activity' as={NavLink} activeClassName="active" exact to={`/project/${projectId}/activity`}/>
+          <Menu.Item name='Details' as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}`}/>
+          <Menu.Item name='Activity' as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}/activity`}/>
       </Menu>
     )
 
+    if (this.props.project.project.length === 0 || loading) {
+      return(
+        <div>
+          <Segment style={{minHeight: '100%'}}>
+            <Accordion as={Menu} vertical secondary>
+
+              <Menu.Item header align>
+                <Placeholder>
+                  <Placeholder.Header image>
+                    <Placeholder.Line />
+                  </Placeholder.Header>
+                </Placeholder>
+              </Menu.Item>
+
+              <Menu.Item active={activeIndex === 0}>
+                  <Accordion.Title
+                      icon='home'
+                      active={activeIndex === 0}
+                      content='Project overview'
+                      index={0}
+                      onClick={this.handleClick}
+                  />
+                  <Accordion.Content active={activeIndex === 0} content={ProjectOverview} />
+              </Menu.Item>
+
+              <Menu.Item as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}/settings`}>
+                  <Accordion.Title
+                      icon='settings'
+                      active={activeIndex === 1}
+                      content='Settings'
+                      index={1}
+                      onClick={this.handleClick}
+                  />
+              </Menu.Item>
+
+            </Accordion>
+          </Segment>
+        </div>
+      )
+    }
+
     return (
-    <Async promiseFn={fetchProject}>
-      <Async.Fulfilled>
+      <Segment style={{minHeight: '100%'}}>
+        <Accordion as={Menu} vertical secondary>
 
-        {data => {
-          return (
-            <Segment style={{minHeight: '100%'}}>
-              <Accordion as={Menu} vertical secondary>
+          <Menu.Item header align>
+            <Avatar maxInitials='1' name={project.title} verticalAlign='middle' size='35px' round='5px'/>{'  '}
+            <span>{project.title}</span>
+          </Menu.Item>
 
-                {[data].map(data=> (
-                  <Menu.Item header align>
-                    <Avatar maxInitials='1' name={data.project.title} verticalAlign='middle' size='35px' round='5px'/>{'  '}
-                    <span>{data.project.title}</span>
-                  </Menu.Item>
-                ))}
+          <Menu.Item active={activeIndex === 0}>
+              <Accordion.Title
+                  icon='home'
+                  active={activeIndex === 0}
+                  content='Project overview'
+                  index={0}
+                  onClick={this.handleClick}
+              />
+              <Accordion.Content active={activeIndex === 0} content={ProjectOverview} />
+          </Menu.Item>
 
-                <Menu.Item active={activeIndex === 0}>
-                    <Accordion.Title
-                        icon='home'
-                        active={activeIndex === 0}
-                        content='Project overview'
-                        index={0}
-                        onClick={this.handleClick}
-                    />
-                    <Accordion.Content active={activeIndex === 0} content={ProjectOverview} />
-                </Menu.Item>
+          <Menu.Item as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}/settings`}>
+              <Accordion.Title
+                  icon='settings'
+                  active={activeIndex === 1}
+                  content='Settings'
+                  index={1}
+                  onClick={this.handleClick}
+              />
+          </Menu.Item>
 
-                <Menu.Item as={NavLink} activeClassName="active" exact to={`/project/${projectId}/settings`}>
-                    <Accordion.Title
-                        icon='settings'
-                        active={activeIndex === 1}
-                        content='Settings'
-                        index={1}
-                        onClick={this.handleClick}
-                    />
-                </Menu.Item>
-
-              </Accordion>
-            </Segment>
-          )
-        }}
-
-      </Async.Fulfilled>
-
-      <Async.Rejected>
-        <Message 
-            error
-            header='Could not fetch project'
-            content='Reload the page and try again.'
-        />
-      </Async.Rejected>
-
-    </Async>
+        </Accordion>
+      </Segment>
     )
   }
 }
+
+ProjectSidebar.propTypes = {
+  getProject: PropTypes.func.isRequired,
+  project: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  project: state.project
+});
+
+export default connect(mapStateToProps, { getProject })(ProjectSidebar);

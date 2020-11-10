@@ -10,7 +10,8 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    response: [],
+    projects: [],
+    project: [],
     loading: false
 }
 
@@ -19,18 +20,24 @@ export default function(state = initialState, action) {
         case GET_PROJECTS:
             return {
                 ...state,
-                response: action.payload,
+                projects: action.payload,
+                loading: false
+            }
+        case GET_PROJECT:
+            return {
+                ...state,
+                project: action.payload,
                 loading: false
             }
         case CREATE_PROJECT:
             return {
                 ...state,
-                response: action.payload
+                project: action.payload
             }
         case DELETE_PROJECT:
             return  {
                 ...state,
-                response: action.payload
+                project: action.payload
             }
         case PROJECT_LOADING:
             return {

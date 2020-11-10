@@ -37,13 +37,13 @@ class MainContainer extends React.Component {
                     </Header>
                     <Segment attached raised style={{minHeight: '100%'}}>
                         <Suspense fallback={<Loader active inline='centered' />}>
-                        <Switch>
-                            <Route path="/" exact component={Dashboard}/>
-                            <Route path="/projects" component={Projects} />
-                            <Route exact path="/project/:id" component={Project}/>
-                            <Route exact path="/project/:id/activity" component={ProjectActivity}/>
-                            <Route exact path="/project/:id/settings" component={ProjectSettings}/>
-                        </Switch>
+                            <Switch>
+                                <Route path="/" exact component={Dashboard}/>
+                                <Route path="/projects" component={Projects} />
+                                <Route exact path="/project/:id" component={Project}/>
+                                <Route exact path="/project/:id/activity" component={ProjectActivity}/>
+                                <Route exact path="/project/:id/settings" component={ProjectSettings}/>
+                            </Switch>
                         </Suspense>
                     </Segment>
                     <Segment attached='bottom'>
