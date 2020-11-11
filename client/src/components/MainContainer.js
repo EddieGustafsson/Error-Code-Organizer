@@ -4,6 +4,7 @@ import React, { Suspense, lazy }                        from 'react';
 import { Grid, Segment, Header }                        from 'semantic-ui-react';
 
 import Navbar                                           from '../components/Navbar';
+import AlertMessage                                     from '../components/AlertMessage';
 import Breadcrumb                                       from '../components/Breadcrumb';
 import packageJson                                      from '../../package.json';
 import { Loader }                                       from 'semantic-ui-react';
@@ -32,6 +33,7 @@ class MainContainer extends React.Component {
             {/* Main area */}
             <Grid.Column width={12}>
                 <Container>
+                    <AlertMessage />
                     <Header as='h5' attached='top'>
                         <Breadcrumb />
                     </Header>
