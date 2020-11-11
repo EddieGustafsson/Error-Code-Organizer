@@ -51,6 +51,7 @@ class ProjectSidebar extends Component {
                 <Placeholder>
                   <Placeholder.Header image>
                     <Placeholder.Line />
+                    <Placeholder.Line />
                   </Placeholder.Header>
                 </Placeholder>
               </Menu.Item>
