@@ -12,6 +12,7 @@ import {
 const initialState = {
     projects: [],
     project: [],
+    erros: [],
     loading: false
 }
 
