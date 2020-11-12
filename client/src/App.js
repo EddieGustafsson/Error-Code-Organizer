@@ -7,6 +7,7 @@ import MainContainer                              from './components/MainContain
 import { Provider }                               from 'react-redux';
 import store                                      from './store';
 import { loadUser }                               from './actions/authActions';
+import PrivateRoute                               from './components/PrivateRoute';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -25,7 +26,7 @@ class App extends Component {
               <Switch>
                 <Route path="/auth/login" exact component={Login} />
                 <Route path="/auth/register" exact component={Register} />
-                <Route path="/" component={MainContainer} />
+                <PrivateRoute path="/" component={MainContainer} />
               </Switch>
             </div>
           </Router>
