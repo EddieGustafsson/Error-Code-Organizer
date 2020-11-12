@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 });
 
 //Routes which should handle requests
-app.use('/v1/project', projectsRoutes);
+app.use('/v1/project', auth, projectsRoutes);
 app.use('/v1/error_codes', auth, errorCodesRoutes);
 app.use('/v1/error_code', auth, errorCodeRoutes);
 app.use('/v1/auth', authRoutes);

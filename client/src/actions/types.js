@@ -15,14 +15,15 @@ export const CREATE_ERROR_CODE  = 'CREATE_ERROR_CODE';
 export const UPDATE_ERROR_CODE  = 'UPDATE_ERROR_CODE';
 export const DELETE_ERROR_CODE  = 'DELETE_ERROR_CODE';
 
-// User Auth
+// User auth
 export const USER_LOADING       = 'USER_LOADING';
 export const USER_LOADED        = 'USER_LOADED';
 export const AUTH_ERROR         = 'AUTH_ERROR';
 export const LOGIN_SUCCESS      = 'LOGIN_SUCCESS';
-export const LOGIN_FAILED       = 'LOGIN_FAILED';
+export const LOGIN_FAIL         = 'LOGIN_FAILED';
+export const LOGOUT_SUCCESS     = 'LOGOUT_SUCCESS';
 export const REGISTER_SUCCESS   = 'REGISTER_SUCCESS';
-export const REGISTER_FAILED    = 'REGISTER_FAILED';
+export const REGISTER_FAIL      = 'REGISTER_FAILED';
 
 // Errors
 export const GET_ERRORS         = 'GET_ERRORS';

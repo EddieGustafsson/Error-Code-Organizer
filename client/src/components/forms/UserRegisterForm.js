@@ -1,103 +1,86 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
-import API from "../../api/apiMap";
+import { Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { register } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
 
-export default class UserRegisterForm extends Component {
+class UserRegisterForm extends Component {   
 
-    constructor(props) {
-        super(props);
-        
-        this.state = { 
-            userName: "",
-            userEmail: "",
-            userPassword: "",
-            userPassword2: "",
+    state = { 
+        userName: "",
+        userEmail: "",
+        userPassword: "",
+        userPassword2: "",
 
-            formLoading: false,
-            formSuccess: false,
+        formLoading: false,
+        formSuccess: false,
 
-            errorList: [],
-            userNameError: false,
-            userEmailError: false,
-            userPasswordError: false,
-            userPassword2Error: false, 
-            formError: false
-        };
+        errorMessage: null
+    };
 
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.submitRegisterForm = this.submitRegisterForm.bind(this);
-        this.postRegisterDetails = this.postRegisterDetails.bind(this);
+    static propTypes = {
+        isAuthenticated: PropTypes.bool,
+        error: PropTypes.object.isRequired,
+        register: PropTypes.func.isRequired,
+        clearErrors: PropTypes.func.isRequired
     }
 
-    submitRegisterForm() {
+    componentDidUpdate(prevProps) {
+        const { error } = this.props;
+        if (error !== prevProps.error) {
+            // Check for register error
+            if(error.id === 'REGISTER_FAIL') {
+                this.setState({ errorMessage: error.message });
+            } else {
+                this.setState({errorMessage: null});
+            }
+        }
+
+    }
+
+    onChange = e => {
+        this.setState({ [e.target.name]: e.target.value});
+    };
+
+    submitRegistrationForm = (e) => {
         let error = false;
+        this.props.clearErrors();
+        e.preventDefault();
 
         this.setState({ formLoading: true });
-
-        if (!this.state.userEmail.replace(/\s/g, '').length) {
-            this.setState({ userEmailError: true });
-            error = true;
-        } else {
-            this.setState({ userEmailError: false });
-        }
 
         if (error) {
             this.setState({ formError: true });
             return;
         }
 
+        const { userName, userEmail, userPassword, userPassword2 } = this.state;
+
         let user = {
-            name: this.state.userName,
-            email: this.state.userEmail,
-            password: this.state.userPassword,
-            password2: this.state.userPassword2
+            name: userName,
+            email: userEmail,
+            password: userPassword,
+            password2: userPassword2
         }
 
-        this.postRegisterDetails(user);
-    }
+        // Attempt to register user
+        this.props.register(user);
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.name === 'test' ? target.checked : target.value;
-        const name = target.name;
+        this.setState({ formSuccess: true });
+        this.setState({ formLoading: false });
 
-        this.setState({
-          [name]: value    
-        });
-    }
-
-    postRegisterDetails(user) {
-        // POST request using fetch with error handling
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
-        };
-        fetch(API.register, requestOptions)
-            .then(async response => {
-                if(!response.ok) {
-                    const responseJson = await response.json();
-                    const list = [];
-
-                    if(!responseJson.error.message) {
-                        const values = Object.keys(responseJson.error).map(function (key) { return responseJson.error[key]; });
-                        list.push(values);
-                    } else {
-                        list.push(responseJson.error.message);
-                    }
-
-                    this.setState({ formError: true, formLoading: false, errorList: list });
-                } else {
-                    this.setState({ formError: false, formSuccess: true, formLoading: false });
-                }
-            })
-            .catch(error => {
-                this.setState({ formError: true, formLoading: false, errorMessage: error.message });
-            });
     }
 
     render() {
+
+        if (this.props.isAuthenticated) {
+            return(
+                <Redirect to="/projects" />
+            )
+        }
+
         return (
             <div>
                 <Form error={this.state.formError} loading={this.state.formLoading}>
@@ -106,8 +89,7 @@ export default class UserRegisterForm extends Component {
                             label='Name' 
                             name='userName'
                             value={this.state.userName}
-                            onChange={this.handleInputChange}
-                            error={this.state.userNameError}
+                            onChange={this.onChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -116,8 +98,7 @@ export default class UserRegisterForm extends Component {
                             type='email'
                             name='userEmail'
                             value={this.state.userEmail}
-                            onChange={this.handleInputChange}
-                            error={this.state.userEmailError}
+                            onChange={this.onChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -126,8 +107,7 @@ export default class UserRegisterForm extends Component {
                             type='password'
                             name='userPassword'
                             value={this.state.userPassword}
-                            onChange={this.handleInputChange}
-                            error={this.state.userPasswordError}
+                            onChange={this.onChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -136,8 +116,7 @@ export default class UserRegisterForm extends Component {
                             type='password'
                             name='userPassword2'
                             value={this.state.userPassword2}
-                            onChange={this.handleInputChange}
-                            error={this.state.userPassword2Error}
+                            onChange={this.onChange}
                         />
                     </Form.Field>
                     <Button 
@@ -146,32 +125,21 @@ export default class UserRegisterForm extends Component {
                         type='submit' 
                         loading={this.state.formLoading} 
                         disabled={!this.state.userPassword2} 
-                        onClick={this.submitRegisterForm}
-                    >Create account</Button>
+                        onClick={this.submitRegistrationForm}
+                    >Register account</Button>
                 </Form>
-
-                {this.state.formError 
-                ?
-                    <Message 
-                        error
-                        header="Failed to login"
-                        list={this.state.errorList}
-                    />
-                :
-                null
-                }
-                {this.state.formSuccess 
-                ?
-                    <Redirect 
-                        to={{
-                            pathname: "/projects",
-                            state: { referrer: "/auth/login" }
-                        }}
-                    />
-                :
-                null
-                }
+                { this.state.errorMessage ? <Message header='Faild to register account' list={this.state.errorMessage} negative/> : null }
             </div>
         )
     }
-  }
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+});
+
+export default connect(
+    mapStateToProps,
+    { register, clearErrors }
+)(UserRegisterForm);

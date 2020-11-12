@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require('mongoose');
 
 // Load input validation
 const validateRegisterInput = require("../validation/registerValidation");
@@ -21,7 +22,11 @@ module.exports = {
             if (user) {
               return res.status(400).json({ email: "Email already exists" });
             } else {
+
+              const id = mongoose.Types.ObjectId();
+
               const newUser = new User({
+                _id: id,
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password
@@ -31,10 +36,28 @@ module.exports = {
               bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                   if (err) throw err;
+
+                  // Create JWT Payload
+                  const payload = {
+                    id,
+                    name: newUser.name
+                  };
+
+                  // Sign token
+                  const token = jwt.sign(payload, process.env.JWT_KEY,{ expiresIn: 3600 });
+
                   newUser.password = hash;
                   newUser
                     .save()
-                    .then(user => res.json(user))
+                    .then(user => res.json({
+                      success: true,
+                      token,
+                      user: {
+                        id,
+                        name: newUser.name,
+                        email: newUser.email
+                      }
+                    }))
                     .catch(err => console.log(err));
                 });
               });
@@ -80,12 +103,17 @@ module.exports = {
                   payload,
                   process.env.JWT_KEY,
                 {
-                    expiresIn: 31556926 // 1 year in seconds
+                    expiresIn: 3600
                 },
                 (err, token) => {
                     res.json({
-                    success: true,
-                    token: "Bearer " + token
+                      success: true,
+                      token,
+                      user: {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email
+                      }
                     });
                 }
                 );
@@ -100,5 +128,10 @@ module.exports = {
             }
             });
         });
+    },
+    getUser: async(req, res, next) => {
+      User.findById(req.user.id)
+        .select('-password')
+        .then(user => res.json(user))
     }
 };
