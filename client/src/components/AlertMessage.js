@@ -1,40 +1,53 @@
 import React from 'react';
 import { Message } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { clearErrors } from '../actions/errorActions';
+import PropTypes from 'prop-types';
 
 class AlertMessage extends React.Component {
-  render() {
 
-    const alerts = {
-        FAILURE: 'failure',
-        SUCCESS: 'success',
-        WARNING: 'warning',
-        CONNECTION: 'connection'
+    state = { 
+        errorStatus: null,
+        errorMessage: null
+    };
+
+    static propTypes = {
+        error: PropTypes.object.isRequired,
+        clearErrors: PropTypes.func.isRequired
     }
 
-    //let alert = alerts.CONNECTION;
+    componentDidUpdate(prevProps) {
+        const { error } = this.props;
+        if (error !== prevProps.error) {
+            this.setState({ errorMessage: error.message.message, errorStatus: error.status });
+        }
 
-    switch(alert) {
-        case alerts.FAILURE:
-            return(
-                <Message header='FAILURE' content='Sorry, we had some technical problems during your last operation.' icon='exclamation triangle' negative />
-            )
-        case alerts.WARNING:
-            return(
-                <Message header='WARNING' content='We had some problems with your last request.' icon='exclamation triangle' warning />
-            )
-        case alerts.SUCCESS:
-            return(
-                <Message header='SUCCESS' content='Everything looks good from here, boss.' icon='check circle' positive />
-            )
-        case alerts.CONNECTION:
-            return(
-                <Message header='CONNECTION' content='Unable to connect with the server. Check your internet connection and try again.' icon='plug' negative />
-            )
-        default:
-            return(null)
     }
 
-  }
+    render() {
+
+        switch(this.state.errorStatus) {
+            case 403:
+            case 500:
+                return(
+                    <Message header='FAILURE' content={this.state.errorMessage} icon='exclamation triangle' negative />
+                )
+            case 401:
+                return(
+                    <Message header='WARNING' content={this.state.errorMessage} icon='exclamation triangle' warning />
+                )
+            default:
+                return(null)
+        }
+
+    }
 }
 
-export default AlertMessage;
+const mapStateToProps = state => ({
+    error: state.error
+});
+
+export default connect(
+    mapStateToProps,
+    { clearErrors }
+)(AlertMessage);
