@@ -1,97 +1,82 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
-import API from "../../api/apiMap";
+import { connect } from 'react-redux';
+import { Redirect } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { login } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
 
-export default class UserLoginForm extends Component {
+class UserLoginForm extends Component {
 
-    constructor(props) {
-        super(props);
-        
-        this.state = { 
-            userEmail: "",
-            userPassword: "",
+    state = { 
+        userEmail: "",
+        userPassword: "",
 
-            formLoading: false,
-            formSuccess: false,
+        formLoading: false,
+        formSuccess: false,
 
-            errorList: [],
-            userEmailError: false,
-            userPasswordError: false, 
-            formError: false
-        };
+        errorMessage: null
+    };
 
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.submitLoginForm = this.submitLoginForm.bind(this);
-        this.postLoginDetails = this.postLoginDetails.bind(this);
+    static propTypes = {
+        isAuthenticated: PropTypes.bool,
+        error: PropTypes.object.isRequired,
+        login: PropTypes.func.isRequired,
+        clearErrors: PropTypes.func.isRequired
     }
 
-    submitLoginForm() {
+    componentDidUpdate(prevProps) {
+        const { error } = this.props;
+        if (error !== prevProps.error) {
+            // Check for login error
+            if(error.id === 'LOGIN_FAIL') {
+                this.setState({ errorMessage: error.message.error.message });
+            } else {
+                this.setState({errorMessage: null});
+            }
+        }
+
+    }
+
+    onChange = e => {
+        this.setState({ [e.target.name]: e.target.value});
+    };
+
+    submitLoginForm = (e) => {
         let error = false;
+        this.props.clearErrors();
+        e.preventDefault();
 
         this.setState({ formLoading: true });
-
-        if (!this.state.userEmail.replace(/\s/g, '').length) {
-            this.setState({ userEmailError: true });
-            error = true;
-        } else {
-            this.setState({ userEmailError: false });
-        }
 
         if (error) {
             this.setState({ formError: true });
             return;
         }
 
+        const { userEmail, userPassword } = this.state;
+
         let user = {
-            email: this.state.userEmail,
-            password: this.state.userPassword
+            email: userEmail,
+            password: userPassword,
         }
 
-        this.postLoginDetails(user);
-    }
+        // Attempt to login user
+        this.props.login(user);
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.name === 'test' ? target.checked : target.value;
-        const name = target.name;
+        this.setState({ formSuccess: true });
+        this.setState({ formLoading: false });
 
-        this.setState({
-          [name]: value    
-        });
-    }
-
-    postLoginDetails(user) {
-        // POST request using fetch with error handling
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
-        };
-        fetch(API.login, requestOptions)
-            .then(async response => {
-                if(!response.ok) {
-                    const responseJson = await response.json();
-                    const list = [];
-
-                    if(!responseJson.error.message) {
-                        const values = Object.keys(responseJson.error).map(function (key) { return responseJson.error[key]; });
-                        list.push(values);
-                    } else {
-                        list.push(responseJson.error.message);
-                    }
-
-                    this.setState({ formError: true, formLoading: false, errorList: list });
-                } else {
-                    this.setState({ formError: false, formSuccess: true, formLoading: false });
-                }
-            })
-            .catch(error => {
-                this.setState({ formError: true, formLoading: false, errorMessage: error.message });
-            });
     }
 
     render() {
+
+        if (this.props.isAuthenticated) {
+            return(
+                <Redirect to="/projects" />
+            )
+        }
+
         return (
             <div>
                 <Form error={this.state.formError} loading={this.state.formLoading}>
@@ -101,8 +86,7 @@ export default class UserLoginForm extends Component {
                             type='email'
                             name='userEmail'
                             value={this.state.userEmail}
-                            onChange={this.handleInputChange}
-                            error={this.state.userEmailError}
+                            onChange={this.onChange}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -111,8 +95,7 @@ export default class UserLoginForm extends Component {
                             type='password'
                             name='userPassword'
                             value={this.state.userPassword}
-                            onChange={this.handleInputChange}
-                            error={this.state.userPasswordError}
+                            onChange={this.onChange}
                         />
                     </Form.Field>
                     <Button 
@@ -124,29 +107,19 @@ export default class UserLoginForm extends Component {
                         onClick={this.submitLoginForm}
                     >Login</Button>
                 </Form>
-
-                {this.state.formError 
-                ?
-                    <Message 
-                        error
-                        header="Failed to login"
-                        list={this.state.errorList}
-                    />
-                :
-                null
-                }
-                {this.state.formSuccess 
-                ?
-                    <Redirect 
-                        to={{
-                            pathname: "/projects",
-                            state: { referrer: "/auth/login" }
-                        }}
-                    />
-                :
-                null
-                }
+                { this.state.errorMessage ? <Message header='Failed to login account' content={this.state.errorMessage} negative/> : null }
             </div>
         )
     }
   }
+
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+});
+
+export default connect(
+    mapStateToProps,
+    { login, clearErrors }
+)(UserLoginForm);

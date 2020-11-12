@@ -53,6 +53,28 @@ export const register = (user) => dispatch => {
 
 }
 
+// Login user
+export const login = (user) => dispatch => {
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    axios.post(API.login, user, config)
+        .then(res => dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        }))
+        .catch(error => {
+            dispatch(returnErrors(error.response.data, error.response.status, 'LOGIN_FAIL'));
+            dispatch({
+                type: LOGIN_FAIL
+            })
+        });
+}
+
 // Logout user
 
 export const logout = () => {
