@@ -82,13 +82,12 @@ module.exports = {
     updatedProject: async(req, res, next) => {
         const id = req.params.projectId;
 
-        Project.updateMany({_id: id}, {last_updated_at: new Date()}, {$set: req.body})
+        Project.updateMany({_id: id}, {$set: req.body, last_updated_at: new Date()})
         .exec()
         .then(result => {
             res.status(200).json({
                 message: 'Project updated'
             });
-    
         })
         .catch(error => {
             console.log(error);

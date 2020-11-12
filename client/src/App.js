@@ -1,67 +1,39 @@
-import React, { Suspense, lazy }                      from 'react';
-import Navbar                                         from './components/Navbar';
-import Breadcrumb                                     from './components/Breadcrumb';
-import packageJson                                    from '../package.json';
-import { Loader }                                     from 'semantic-ui-react';
-import { Container, Grid, Segment, Header }           from 'semantic-ui-react';
-import {BrowserRouter as Router, Switch, Route }      from 'react-router-dom';
-
-import 'semantic-ui-css/semantic.min.css';
+import React, { Component }                                      from 'react';
+import { Container }                              from 'semantic-ui-react';
+import {BrowserRouter as Router, Switch, Route }  from 'react-router-dom';
+import Login                                      from './pages/Login';
+import Register                                   from './pages/Register';
+import MainContainer                              from './components/MainContainer';
+import { Provider }                               from 'react-redux';
+import store                                      from './store';
+import { loadUser }                               from './actions/authActions';
+import PrivateRoute                               from './components/PrivateRoute';
 import './App.css';
+import 'semantic-ui-css/semantic.min.css';
 
-const Project           = lazy(() => import("./pages/Project"));
-const Projects          = lazy(() => import("./pages/Projects"));
-const Dashboard         = lazy(() => import("./pages/Dashboard"));
-const ProjectSidebar    = lazy(() => import("./components/ProjectSidebar"));
-const ProjectActivity   = lazy(() => import("./pages/ProjectActivity"));
-const ProjectSettings   = lazy(() => import("./pages/ProjectSettings"));
 
-function App() {
-  return (
-    <Container fluid>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Grid columns='equal'>
-            {/* Left sidebar */}
-            <Grid.Column>
-              <Suspense fallback={<Loader active inline='centered' />}>
-                <Switch>
-                    <Route path="/project/:id" component={ProjectSidebar} />
-                </Switch>
-              </Suspense>
-            </Grid.Column>
-            {/* Main area */}
-            <Grid.Column width={12}>
-              <Container>
-                <Header as='h5' attached='top'>
-                  <Breadcrumb />
-                </Header>
-                <Segment attached raised style={{minHeight: '100%'}}>
-                  <Suspense fallback={<Loader active inline='centered' />}>
-                    <Switch>
-                      <Route path="/" exact component={Dashboard}/>
-                      <Route path="/projects" component={Projects} />
-                      <Route exact path="/project/:id" component={Project}/>
-                      <Route exact path="/project/:id/activity" component={ProjectActivity}/>
-                      <Route exact path="/project/:id/settings" component={ProjectSettings}/>
-                    </Switch>
-                  </Suspense>
-                </Segment>
-                <Segment attached='bottom'>
-                  ECO Version {packageJson.version}
-                </Segment>
-              </Container>
-            </Grid.Column>
-            {/* Right sidebar */}
-            <Grid.Column>
+class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadUser());
+  };
 
-            </Grid.Column>
-          </Grid>
-        </div>
-      </Router>
-    </Container>
-  );
+  render(){
+    return(
+      <Provider store={store}>
+        <Container fluid>
+          <Router>
+            <div className="App">
+              <Switch>
+                <Route path="/auth/login" exact component={Login} />
+                <Route path="/auth/register" exact component={Register} />
+                <PrivateRoute path="/" component={MainContainer} />
+              </Switch>
+            </div>
+          </Router>
+        </Container>
+      </Provider>
+    );
+  }
 }
 
 export default App;

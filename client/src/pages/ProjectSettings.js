@@ -3,6 +3,9 @@ import Async from 'react-async';
 import { Segment, Message, Button, Tab, Grid, Header } from 'semantic-ui-react';
 import API from "../api/apiMap";
 import ProjectSettingsForm from "../components/forms/ProjectSettingsForm";
+import RemoveProjectModal from "../components/modals/RemoveProjectModal";
+import ArchiveProjectModal from "../components/modals/ArchiveProjectModal";
+import ExportProjectModal from "../components/modals/ExportProjectModal";
 
 function ProjectSettings({match}) {
 
@@ -36,17 +39,17 @@ function ProjectSettings({match}) {
             <Message>
                 <Header as='h3'>Export project</Header>
                 <p>Export this project with all its related data in order to move your project to a new ECO instance.</p>
-                <Button>Export project</Button>
+                <ExportProjectModal />
             </Message>
             <Message>
                 <Header as='h3' color='orange'>Archive project</Header>
                 <p>Archiving the project will make it entirely read only. It is hidden from the dashboard and doesn't show up in searches.</p>
-                <Button color='orange'>Archive project</Button>
+                <ArchiveProjectModal projectId={match.params.id} />
             </Message>
             <Message>
                 <Header as='h3' color='red'>Remove project</Header>
                 <p>Once you remove a project, there is no going back. Please be certain. </p>
-                <Button color='red'>Remove project</Button>
+                <RemoveProjectModal projectId={match.params.id} />
             </Message>
         </Tab.Pane>
     ]

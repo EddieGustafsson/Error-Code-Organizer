@@ -1,23 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Avatar from 'react-avatar';
-import Async from 'react-async';
 import ReactMarkdown from 'react-markdown';
 import DataTable from 'react-data-table-component';
 import ReactTimeAgo from 'react-time-ago';
 import JavascriptTimeAgo from 'javascript-time-ago'
 
-import { Item, Segment, Message, Header, Grid } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { getProjects } from '../actions/projectActions';
+import PropTypes from 'prop-types';
+
+import { Segment, Header, Grid } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import en from 'javascript-time-ago/locale/en';
-import API from "../api/apiMap";
 
 import CreateProjectModal from '../components/modals/CreateProjectModal';
 
 JavascriptTimeAgo.addLocale(en);
-
-const fetchPosts = () => fetch(API.project)
-                            .then(res => (res.ok ? res : Promise.reject))
-                            .then(res => res.json());
 
 const columns = [
     {
@@ -41,60 +39,50 @@ const ExpandedComponent = ({ data }) => (
     </Segment>
 );
 
-function Projects() {
-    return (
-        <Async promiseFn={fetchPosts}>
-            <Segment vertical>
-                <Grid>
-                    <Grid.Column floated='left' width={5}>
-                        <Header as='h2'>Projects</Header>
-                    </Grid.Column>
-                    <Grid.Column floated='right' width={5}>
-                        <CreateProjectModal />
-                    </Grid.Column>
-                </Grid>
-            </Segment>
-            
-            <Async.Loading>
-            <Item.Group>
-                <Segment loading vertical>
-                    <br/>
-                    <br/>
-                    <br/>
+class Projects extends Component {
+
+    componentDidMount() {
+        this.props.getProjects();
+    }
+
+    render() {
+        const { projects } = this.props.project.projects;
+        return (
+            <div>
+                <Segment vertical>
+                    <Grid>
+                        <Grid.Column floated='left' width={5}>
+                            <Header as='h2'>Projects</Header>
+                        </Grid.Column>
+                        <Grid.Column floated='right' width={5}>
+                            <CreateProjectModal />
+                        </Grid.Column>
+                    </Grid>
                 </Segment>
-            </Item.Group>
-            </Async.Loading>
-
-            <Async.Fulfilled>
-            {data => {
-                return (
-                    <div>
-                        <Segment vertical>
-                            <DataTable
-                                columns={columns}
-                                data={data.projects}
-                                noHeader={true}
-                                striped={true}
-                                expandableRowsComponent={<ExpandedComponent/>}
-                                expandableRows
-                                expandOnRowClicked
-                                pagination
-                            />
-                        </Segment>
-                    </div>
-                )
-            }}
-            </Async.Fulfilled>
-
-            <Async.Rejected>
-                <Message
-                    error
-                    header='Could not fetch projects'
-                    content='Reload the page and try again.'
-                />
-            </Async.Rejected>
-        </Async>
-    );
+                <Segment vertical>
+                    <DataTable
+                        columns={columns}
+                        data={projects}
+                        noHeader={true}
+                        striped={true}
+                        expandableRowsComponent={<ExpandedComponent/>}
+                        expandableRows
+                        expandOnRowClicked
+                        pagination
+                    />
+                </Segment>
+            </div>
+        );
+    }
 }
 
-export default Projects;
+Projects.propTypes = {
+    getProjects: PropTypes.func.isRequired,
+    project: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    project: state.project
+});
+
+export default connect(mapStateToProps, { getProjects })(Projects);
