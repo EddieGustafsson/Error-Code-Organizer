@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Loader, Dimmer } from 'semantic-ui-react' 
+import { Loader, Dimmer } from 'semantic-ui-react'
 
 class LoadingContainer extends Component {
 
   render() {
     return (
-         <Dimmer inverted active>
-            <Loader />
-        </Dimmer>
+      <Dimmer inverted active>
+        <Loader />
+      </Dimmer>
     );
   }
 }

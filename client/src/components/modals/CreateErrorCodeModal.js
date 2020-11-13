@@ -7,9 +7,9 @@ export default class CreateErrorCodeModal extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
-            modalOpen: false, 
-            
+        this.state = {
+            modalOpen: false,
+
             code: '',
             location: '',
             message: '',
@@ -21,7 +21,7 @@ export default class CreateErrorCodeModal extends Component {
             codeError: false,
             locationError: false,
             descriptionError: false,
-            messageError: false, 
+            messageError: false,
             formError: false
         };
 
@@ -29,9 +29,9 @@ export default class CreateErrorCodeModal extends Component {
         this.submitErrorCodeForm = this.submitErrorCodeForm.bind(this);
         this.createErrorCode = this.createErrorCode.bind(this);
     }
-  
+
     handleOpen = () => this.setState({ modalOpen: true })
-  
+
     handleClose = () => this.setState({ modalOpen: false })
 
     handleInputChange(event) {
@@ -40,7 +40,7 @@ export default class CreateErrorCodeModal extends Component {
         const name = target.name;
 
         this.setState({
-          [name]: value    
+            [name]: value
         });
     }
 
@@ -83,7 +83,7 @@ export default class CreateErrorCodeModal extends Component {
         };
         fetch(API.error_code, requestOptions)
             .then(async response => {
-                if(!response.ok) {
+                if (!response.ok) {
                     this.setState({ formError: true, formLoading: false });
                 } else {
                     this.setState({ formError: false, formSuccess: true, formLoading: false });
@@ -98,7 +98,7 @@ export default class CreateErrorCodeModal extends Component {
         return (
             <Modal
                 open={this.state.modalOpen}
-                onClose={this.handleClose} 
+                onClose={this.handleClose}
                 trigger={
                     <Button icon positive floated='right' labelPosition='left' onClick={this.handleOpen}>
                         <Icon name='add' />
@@ -110,7 +110,7 @@ export default class CreateErrorCodeModal extends Component {
                     <Form error={this.state.formError} loading={this.state.formLoading}>
                         <Form.Field>
                             <Form.Input
-                                label='Code' 
+                                label='Code'
                                 placeholder='0x80020019'
                                 name='code'
                                 value={this.state.code}
@@ -120,7 +120,7 @@ export default class CreateErrorCodeModal extends Component {
                         </Form.Field>
                         <Form.Field>
                             <Form.Input
-                                label='Location' 
+                                label='Location'
                                 placeholder='FileUpload'
                                 name='location'
                                 value={this.state.location}
@@ -130,7 +130,7 @@ export default class CreateErrorCodeModal extends Component {
                         </Form.Field>
                         <Form.Field>
                             <Form.Input
-                                label='Message' 
+                                label='Message'
                                 placeholder='Memory full'
                                 name='message'
                                 value={this.state.message}
@@ -139,9 +139,9 @@ export default class CreateErrorCodeModal extends Component {
                             />
                         </Form.Field>
                         <Form.Field>
-                            <Form.TextArea 
-                                label='Project description' 
-                                placeholder='Description format' 
+                            <Form.TextArea
+                                label='Project description'
+                                placeholder='Description format'
                                 name='description'
                                 value={this.state.description}
                                 onChange={this.handleInputChange}
@@ -149,25 +149,25 @@ export default class CreateErrorCodeModal extends Component {
                             />
                         </Form.Field>
                     </Form>
-                    {this.state.formError 
-                    ?
-                    <Message 
-                        error
-                        header="Failed to create error code"
-                        content="Something went wrong while creating your error code"
-                    />
-                    :
-                    null
+                    {this.state.formError
+                        ?
+                        <Message
+                            error
+                            header="Failed to create error code"
+                            content="Something went wrong while creating your error code"
+                        />
+                        :
+                        null
                     }
-                    {this.state.formSuccess 
-                    ?
-                    <Message 
-                        success
-                        header="Error code created!"
-                        content="The error code has been succesfully created"
-                    />
-                    :
-                    null
+                    {this.state.formSuccess
+                        ?
+                        <Message
+                            success
+                            header="Error code created!"
+                            content="The error code has been succesfully created"
+                        />
+                        :
+                        null
                     }
                 </Modal.Content>
                 <Modal.Actions>
@@ -177,4 +177,4 @@ export default class CreateErrorCodeModal extends Component {
             </Modal>
         )
     }
-  }
+}

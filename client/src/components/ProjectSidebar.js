@@ -8,17 +8,17 @@ import { Accordion, Menu, Segment, Placeholder } from 'semantic-ui-react'
 
 class ProjectSidebar extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
-        id : this.props.match.params.id,
-        activeIndex: 0
+      id: this.props.match.params.id,
+      activeIndex: 0
     }
   }
 
   componentDidMount() {
-      this.props.getProject(this.state.id);
+    this.props.getProject(this.state.id);
   }
 
   handleClick = (e, titleProps) => {
@@ -35,16 +35,16 @@ class ProjectSidebar extends Component {
     const loading = this.props.project.loading;
 
     const ProjectOverview = (
-      <Menu secondary vertical style={{width: '100%'}}>
-          <Menu.Item name='Details' as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}`}/>
-          <Menu.Item name='Activity' as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}/activity`}/>
+      <Menu secondary vertical style={{ width: '100%' }}>
+        <Menu.Item name='Details' as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}`} />
+        <Menu.Item name='Activity' as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}/activity`} />
       </Menu>
     )
 
     if (this.props.project.project.length === 0 || loading) {
-      return(
+      return (
         <div>
-          <Segment style={{minHeight: '100%'}}>
+          <Segment style={{ minHeight: '100%' }}>
             <Accordion as={Menu} vertical secondary>
 
               <Menu.Item header align>
@@ -57,24 +57,24 @@ class ProjectSidebar extends Component {
               </Menu.Item>
 
               <Menu.Item active={activeIndex === 0}>
-                  <Accordion.Title
-                      icon='home'
-                      active={activeIndex === 0}
-                      content='Project overview'
-                      index={0}
-                      onClick={this.handleClick}
-                  />
-                  <Accordion.Content active={activeIndex === 0} content={ProjectOverview} />
+                <Accordion.Title
+                  icon='home'
+                  active={activeIndex === 0}
+                  content='Project overview'
+                  index={0}
+                  onClick={this.handleClick}
+                />
+                <Accordion.Content active={activeIndex === 0} content={ProjectOverview} />
               </Menu.Item>
 
               <Menu.Item as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}/settings`}>
-                  <Accordion.Title
-                      icon='settings'
-                      active={activeIndex === 1}
-                      content='Settings'
-                      index={1}
-                      onClick={this.handleClick}
-                  />
+                <Accordion.Title
+                  icon='settings'
+                  active={activeIndex === 1}
+                  content='Settings'
+                  index={1}
+                  onClick={this.handleClick}
+                />
               </Menu.Item>
 
             </Accordion>
@@ -84,33 +84,33 @@ class ProjectSidebar extends Component {
     }
 
     return (
-      <Segment style={{minHeight: '100%'}}>
+      <Segment style={{ minHeight: '100%' }}>
         <Accordion as={Menu} vertical secondary>
 
           <Menu.Item header align>
-            <Avatar maxInitials='1' name={project.title} verticalAlign='middle' size='35px' round='5px'/>{'  '}
+            <Avatar maxInitials='1' name={project.title} verticalAlign='middle' size='35px' round='5px' />{'  '}
             <span>{project.title}</span>
           </Menu.Item>
 
           <Menu.Item active={activeIndex === 0}>
-              <Accordion.Title
-                  icon='home'
-                  active={activeIndex === 0}
-                  content='Project overview'
-                  index={0}
-                  onClick={this.handleClick}
-              />
-              <Accordion.Content active={activeIndex === 0} content={ProjectOverview} />
+            <Accordion.Title
+              icon='home'
+              active={activeIndex === 0}
+              content='Project overview'
+              index={0}
+              onClick={this.handleClick}
+            />
+            <Accordion.Content active={activeIndex === 0} content={ProjectOverview} />
           </Menu.Item>
 
           <Menu.Item as={NavLink} activeClassName="active" exact to={`/project/${this.state.id}/settings`}>
-              <Accordion.Title
-                  icon='settings'
-                  active={activeIndex === 1}
-                  content='Settings'
-                  index={1}
-                  onClick={this.handleClick}
-              />
+            <Accordion.Title
+              icon='settings'
+              active={activeIndex === 1}
+              content='Settings'
+              index={1}
+              onClick={this.handleClick}
+            />
           </Menu.Item>
 
         </Accordion>

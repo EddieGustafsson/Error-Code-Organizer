@@ -1,10 +1,10 @@
-import { 
-    GET_PROJECTS, 
-    GET_PROJECT, 
-    CREATE_PROJECT, 
-    UPDATE_PROJECT, 
-    ARCHIVE_PROJECT, 
-    EXPORT_PROJECT, 
+import {
+    GET_PROJECTS,
+    GET_PROJECT,
+    CREATE_PROJECT,
+    UPDATE_PROJECT,
+    ARCHIVE_PROJECT,
+    EXPORT_PROJECT,
     DELETE_PROJECT,
     PROJECT_LOADING
 } from '../actions/types';
@@ -16,8 +16,8 @@ const initialState = {
     loading: false
 }
 
-export default function(state = initialState, action) {
-    switch(action.type) {
+export default function (state = initialState, action) {
+    switch (action.type) {
         case GET_PROJECTS:
             return {
                 ...state,
@@ -36,7 +36,7 @@ export default function(state = initialState, action) {
                 project: action.payload
             }
         case DELETE_PROJECT:
-            return  {
+            return {
                 ...state,
                 project: action.payload
             }

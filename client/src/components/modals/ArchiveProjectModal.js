@@ -8,18 +8,18 @@ export default class ArchiveProjectModal extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             modalOpen: false,
             formLoading: false,
             formSuccess: false,
-            formError: false 
+            formError: false
         };
 
         this.removeProject = this.removeProject.bind(this);
     }
-  
+
     handleOpen = () => this.setState({ modalOpen: true })
-  
+
     handleClose = () => this.setState({ modalOpen: false })
 
     removeProject() {
@@ -30,7 +30,7 @@ export default class ArchiveProjectModal extends Component {
         };
         fetch(API.project + this.props.projectId, requestOptions)
             .then(async response => {
-                if(!response.ok) {
+                if (!response.ok) {
                     this.setState({ formError: true, formLoading: false });
                 } else {
                     this.setState({ formError: false, formSuccess: true, formLoading: false });
@@ -55,33 +55,33 @@ export default class ArchiveProjectModal extends Component {
                 <Modal.Header>Archive project</Modal.Header>
                 <Modal.Content>
                     <p>Are you sure you want to archive this project?</p>
-                    {this.state.formError 
-                    ?
-                    <Message 
-                        error
-                        header="Failed to archive project"
-                        content="Something went wrong while archiving your project"
-                    />
-                    :
-                    null
+                    {this.state.formError
+                        ?
+                        <Message
+                            error
+                            header="Failed to archive project"
+                            content="Something went wrong while archiving your project"
+                        />
+                        :
+                        null
                     }
-                    {this.state.formSuccess 
-                    ?
-                        <Redirect 
+                    {this.state.formSuccess
+                        ?
+                        <Redirect
                             to={{
                                 pathname: "/projects/archive",
                                 state: { referrer: "/project/" + this.props.projectId }
                             }}
                         />
-                    :
-                    null
+                        :
+                        null
                     }
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive type='submit' loading={this.state.formLoading}  onClick={this.removeProject}>Yes</Button>
+                    <Button positive type='submit' loading={this.state.formLoading} onClick={this.removeProject}>Yes</Button>
                     <Button basic onClick={this.handleClose} floated='right'>Cancel</Button>
                 </Modal.Actions>
             </Modal>
         )
     }
-  }
+}

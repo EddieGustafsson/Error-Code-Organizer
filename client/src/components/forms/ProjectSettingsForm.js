@@ -5,10 +5,10 @@ export default class ProjectSettingsForm extends Component {
 
     constructor(props) {
         super(props);
-        
-        this.state = { 
 
-            title: this.props.data.project.title, 
+        this.state = {
+
+            title: this.props.data.project.title,
             description: this.props.data.project.description,
             project_id: this.props.data.project._id,
 
@@ -16,7 +16,7 @@ export default class ProjectSettingsForm extends Component {
             formSuccess: false,
 
             titleError: false,
-            descriptionError: false, 
+            descriptionError: false,
             formError: false
         };
 
@@ -56,7 +56,7 @@ export default class ProjectSettingsForm extends Component {
         const name = target.name;
 
         this.setState({
-          [name]: value    
+            [name]: value
         });
     }
 
@@ -69,7 +69,7 @@ export default class ProjectSettingsForm extends Component {
         };
         fetch(API.project + this.props.data.project._id, requestOptions)
             .then(async response => {
-                if(!response.ok) {
+                if (!response.ok) {
                     this.setState({ formError: true, formLoading: false });
                 } else {
                     this.setState({ formError: false, formSuccess: true, formLoading: false });
@@ -86,7 +86,7 @@ export default class ProjectSettingsForm extends Component {
                 <Form>
                     <Form.Group>
                         <Form.Input
-                            label='Project name' 
+                            label='Project name'
                             name='title'
                             width='10'
                             value={this.state.title}
@@ -94,7 +94,7 @@ export default class ProjectSettingsForm extends Component {
                             error={this.state.titleError}
                         />
                         <Form.Input
-                            label='Project ID' 
+                            label='Project ID'
                             name='_id'
                             value={this.state.project_id}
                             width='5'
@@ -102,9 +102,9 @@ export default class ProjectSettingsForm extends Component {
                         />
                     </Form.Group>
                     <Form.Field>
-                        <Form.TextArea 
-                            label='Project description' 
-                            placeholder='Description format' 
+                        <Form.TextArea
+                            label='Project description'
+                            placeholder='Description format'
                             name='description'
                             width='15'
                             rows={6}
@@ -113,36 +113,36 @@ export default class ProjectSettingsForm extends Component {
                             error={this.state.descriptionError}
                         />
                     </Form.Field>
-                    <Button 
-                        positive 
-                        type='submit' 
-                        loading={this.state.formLoading} 
-                        disabled={!this.state.title} 
+                    <Button
+                        positive
+                        type='submit'
+                        loading={this.state.formLoading}
+                        disabled={!this.state.title}
                         onClick={this.submitProjectSettingsForm}
                     >Save changes</Button>
                 </Form>
 
-                {this.state.formError 
-                ?
-                <Message 
-                    error
-                    header="Failed to save project"
-                    content="Something went wrong while saving the changes to your project"
-                />
-                :
-                null
+                {this.state.formError
+                    ?
+                    <Message
+                        error
+                        header="Failed to save project"
+                        content="Something went wrong while saving the changes to your project"
+                    />
+                    :
+                    null
                 }
-                {this.state.formSuccess 
-                ?
-                <Message 
-                    success
-                    header="Project saved!"
-                    content="The changes has been succesfully saved"
-                />
-                :
-                null
+                {this.state.formSuccess
+                    ?
+                    <Message
+                        success
+                        header="Project saved!"
+                        content="The changes has been succesfully saved"
+                    />
+                    :
+                    null
                 }
             </div>
         )
     }
-  }
+}

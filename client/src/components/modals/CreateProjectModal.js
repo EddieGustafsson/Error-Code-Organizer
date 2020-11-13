@@ -6,22 +6,22 @@ import { createProject, getProjects } from '../../actions/projectActions';
 import PropTypes from 'prop-types';
 
 class CreateProjectModal extends Component {
-    state = { 
-        modalOpen: false, 
-        
-        title: '', 
+    state = {
+        modalOpen: false,
+
+        title: '',
         description: '',
 
         formLoading: false,
         formSuccess: false,
 
         titleError: false,
-        descriptionError: false, 
+        descriptionError: false,
         formError: false
     };
 
     handleOpen = () => this.setState({ modalOpen: true })
-  
+
     handleClose = () => this.setState({ modalOpen: false })
 
     onChange = (e) => {
@@ -62,14 +62,14 @@ class CreateProjectModal extends Component {
         return (
             <Modal
                 open={this.state.modalOpen}
-                onClose={this.handleClose} 
+                onClose={this.handleClose}
                 trigger={
 
                     this.props.dropdownItem ?
                         <Dropdown.Item onClick={this.handleOpen}>Create project</Dropdown.Item>
-                    :   
+                        :
                         <Button icon positive floated='right' labelPosition='left' onClick={this.handleOpen}>
-                        <Icon name='add' />
+                            <Icon name='add' />
                             Create project
                         </Button>
                 }>
@@ -78,7 +78,7 @@ class CreateProjectModal extends Component {
                     <Form error={this.state.formError} loading={this.state.formLoading}>
                         <Form.Field>
                             <Form.Input
-                                label='Project title' 
+                                label='Project title'
                                 placeholder='My awsome project'
                                 name='title'
                                 value={this.state.title}
@@ -87,34 +87,34 @@ class CreateProjectModal extends Component {
                             />
                         </Form.Field>
                         <Form.Field>
-                            <Form.TextArea 
-                                label='Project description (optional)' 
-                                placeholder='Description format' 
+                            <Form.TextArea
+                                label='Project description (optional)'
+                                placeholder='Description format'
                                 name='description'
                                 onChange={this.onChange}
                                 error={this.state.descriptionError}
                             />
                         </Form.Field>
                     </Form>
-                    {this.state.formError 
-                    ?
-                    <Message 
-                        error
-                        header="Failed to create project"
-                        content="Something went wrong while creating your project"
-                    />
-                    :
-                    null
+                    {this.state.formError
+                        ?
+                        <Message
+                            error
+                            header="Failed to create project"
+                            content="Something went wrong while creating your project"
+                        />
+                        :
+                        null
                     }
-                    {this.state.formSuccess 
-                    ?
-                    <Message 
-                        success
-                        header="Project created!"
-                        content="The projects has been succesfully created"
-                    />
-                    :
-                    null
+                    {this.state.formSuccess
+                        ?
+                        <Message
+                            success
+                            header="Project created!"
+                            content="The projects has been succesfully created"
+                        />
+                        :
+                        null
                     }
                 </Modal.Content>
                 <Modal.Actions>
@@ -124,7 +124,7 @@ class CreateProjectModal extends Component {
             </Modal>
         )
     }
-  }
+}
 
 const mapStateToProps = state => ({
     project: state.project

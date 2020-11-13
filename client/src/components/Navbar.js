@@ -4,7 +4,7 @@ import CreateProjectModal from '../components/modals/CreateProjectModal';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../actions/authActions';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
 class Navbar extends Component {
 
@@ -17,7 +17,7 @@ class Navbar extends Component {
       <Segment inverted raised color='violet' attached='bottom'>
         <Menu inverted fluid secondary>
           <Menu.Item name='eco'>
-              <Icon name='file code' color='white' size='big' />
+            <Icon name='file code' color='white' size='big' />
               ECO
           </Menu.Item>
 
@@ -42,7 +42,7 @@ class Navbar extends Component {
             <Menu.Item>
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
-            <Menu.Item name='logout'onClick={ this.props.logout }/>
+            <Menu.Item name='logout' onClick={this.props.logout} />
           </Menu.Menu>
         </Menu>
       </Segment>

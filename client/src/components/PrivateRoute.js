@@ -19,17 +19,17 @@ class PrivateRoute extends React.Component {
     componentDidUpdate(prevProps) {
         const { isLoading } = this.props;
         if (isLoading !== prevProps.isLoading) {
-            if(!isLoading) {
+            if (!isLoading) {
                 this.setState({ isLoading: false });
             }
         }
     }
 
     render() {
-        const {component: Component, ...rest} = this.props;
+        const { component: Component, ...rest } = this.props;
 
         if (this.state.isLoading && !this.props.success) {
-            return(
+            return (
                 <LoadingContainer />
             );
         }
@@ -38,7 +38,7 @@ class PrivateRoute extends React.Component {
             <Route {...rest} render={props => (
                 this.props.isAuthenticated ?
                     <Component {...props} />
-                : <Redirect to="/auth/login" />
+                    : <Redirect to="/auth/login" />
             )} />
         );
 

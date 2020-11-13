@@ -7,14 +7,14 @@ import RemoveProjectModal from "../components/modals/RemoveProjectModal";
 import ArchiveProjectModal from "../components/modals/ArchiveProjectModal";
 import ExportProjectModal from "../components/modals/ExportProjectModal";
 
-function ProjectSettings({match}) {
+function ProjectSettings({ match }) {
 
     const fetchProject = () => fetch(API.project + match.params.id)
-                            .then(res => (res.ok ? res : Promise.reject))
-                            .then(res => res.json());
+        .then(res => (res.ok ? res : Promise.reject))
+        .then(res => res.json());
 
     const generalForm = [
-        <Tab.Pane attached={false} style={{minHeight: '50vh'}}>
+        <Tab.Pane attached={false} style={{ minHeight: '50vh' }}>
             <Async promiseFn={fetchProject}>
                 <Async.Fulfilled>
                     {data => {
@@ -24,18 +24,18 @@ function ProjectSettings({match}) {
                     }}
                 </Async.Fulfilled>
                 <Async.Rejected>
-                        <Message 
-                            error
-                            header='Could not fetch project'
-                            content='Reload the page and try again.'
-                        />
+                    <Message
+                        error
+                        header='Could not fetch project'
+                        content='Reload the page and try again.'
+                    />
                 </Async.Rejected>
             </Async>
         </Tab.Pane>
     ]
 
     const advancedForm = [
-        <Tab.Pane attached={false} style={{minHeight: '50vh'}}>
+        <Tab.Pane attached={false} style={{ minHeight: '50vh' }}>
             <Message>
                 <Header as='h3'>Export project</Header>
                 <p>Export this project with all its related data in order to move your project to a new ECO instance.</p>
@@ -73,7 +73,7 @@ function ProjectSettings({match}) {
             </Segment>
         </div>
     );
-    
+
 }
 
 export default ProjectSettings;

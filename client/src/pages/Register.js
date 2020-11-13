@@ -9,16 +9,16 @@ class Register extends React.Component {
       <div>
         <SmallNavbar />
         <Container>
-            <Grid centered>
-                <Grid.Column width={6}>
-                    <Segment>
-                        <UserRegisterForm />
-                    </Segment>
-                    <Segment>
-                        <p>Already have an account? <a href="/auth/login">Login to your account</a>. </p>
-                    </Segment>
-                </Grid.Column>
-            </Grid>
+          <Grid centered>
+            <Grid.Column width={6}>
+              <Segment>
+                <UserRegisterForm />
+              </Segment>
+              <Segment>
+                <p>Already have an account? <a href="/auth/login">Login to your account</a>. </p>
+              </Segment>
+            </Grid.Column>
+          </Grid>
         </Container>
       </div>
     )

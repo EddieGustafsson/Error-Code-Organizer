@@ -11,16 +11,16 @@ import PropTypes from 'prop-types';
 
 class Project extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
-        id : this.props.match.params.id
+      id: this.props.match.params.id
     }
   }
 
   componentDidMount() {
-      this.props.getProject(this.state.id);
+    this.props.getProject(this.state.id);
   }
 
   render() {
@@ -28,29 +28,29 @@ class Project extends Component {
     const loading = this.props.project.loading;
 
     if (this.props.project.project.length === 0 || loading) {
-      return(
+      return (
         <div>
           <Segment vertical>
-              <Grid columns={2} verticalAlign='middle'>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Placeholder>
-                      <Placeholder.Header image>
-                        <Placeholder.Line />
-                        <Placeholder.Line />
-                      </Placeholder.Header>
-                    </Placeholder>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            <br/>
-    
+            <Grid columns={2} verticalAlign='middle'>
+              <Grid.Row>
+                <Grid.Column>
+                  <Placeholder>
+                    <Placeholder.Header image>
+                      <Placeholder.Line />
+                      <Placeholder.Line />
+                    </Placeholder.Header>
+                  </Placeholder>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+            <br />
+
             <Placeholder>
               <Placeholder.Line />
             </Placeholder>
-    
+
           </Segment>
-  
+
           <Message>
             <Placeholder>
               <Placeholder.Header image>
@@ -59,12 +59,12 @@ class Project extends Component {
               </Placeholder.Header>
             </Placeholder>
           </Message>
-  
+
           <Header as='h5' attached='top'>Error codes</Header>
           <Segment attached='bottom' loading>
             <ErrorCodesTable />
           </Segment>
-  
+
           <Header as='h5' attached='top'>Description</Header>
           <Segment attached='bottom'>
             <Placeholder>
@@ -82,23 +82,23 @@ class Project extends Component {
     return (
       <div>
         <Segment vertical>
-            <Grid columns={2} verticalAlign='middle'>
-              <Grid.Row>
-                <Grid.Column width={1}>
-                  <Avatar maxInitials='1' name={project.title} verticalAlign='middle' size='60px' round='5px'/>
-                </Grid.Column>
-                <Grid.Column>
-                  <Header as='h3'>
-                    <Header.Content>
-                      {project.title}
-                      <Header.Subheader>Project ID: {project._id}</Header.Subheader>
-                    </Header.Content>
-                  </Header>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          <br/>
-  
+          <Grid columns={2} verticalAlign='middle'>
+            <Grid.Row>
+              <Grid.Column width={1}>
+                <Avatar maxInitials='1' name={project.title} verticalAlign='middle' size='60px' round='5px' />
+              </Grid.Column>
+              <Grid.Column>
+                <Header as='h3'>
+                  <Header.Content>
+                    {project.title}
+                    <Header.Subheader>Project ID: {project._id}</Header.Subheader>
+                  </Header.Content>
+                </Header>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <br />
+
           <List horizontal size='small'>
             <List.Item>
               <List.Content>
@@ -107,18 +107,18 @@ class Project extends Component {
             </List.Item>
             <List.Item>
               <List.Content>
-              <Icon disabled name='tag' /><b>0</b> Tags
+                <Icon disabled name='tag' /><b>0</b> Tags
               </List.Content>
             </List.Item>
             <List.Item>
               <List.Content>
-              <Icon disabled name='calendar alternate outline' /><b>{Moment(project.created_at).format('YYYY-MM-DD')}</b>
+                <Icon disabled name='calendar alternate outline' /><b>{Moment(project.created_at).format('YYYY-MM-DD')}</b>
               </List.Content>
             </List.Item>
           </List>
-  
+
         </Segment>
-  
+
         <Message>
           <Feed>
             <Feed.Event>
@@ -130,15 +130,15 @@ class Project extends Component {
             </Feed.Event>
           </Feed>
         </Message>
-  
+
         <Header as='h5' attached='top'>Error codes</Header>
         <Segment attached='bottom'>
           <ErrorCodesTable projectId={project._id} errorCodeData={project.error_codes} />
         </Segment>
-  
+
         <Header as='h5' attached='top'>Description</Header>
         <Segment attached='bottom'>
-          <ReactMarkdown source={project.description}/>
+          <ReactMarkdown source={project.description} />
         </Segment>
       </div>
     );

@@ -10,7 +10,7 @@ import { getProjects } from '../actions/projectActions';
 import PropTypes from 'prop-types';
 
 import { Segment, Header, Grid } from 'semantic-ui-react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import en from 'javascript-time-ago/locale/en';
 
 import CreateProjectModal from '../components/modals/CreateProjectModal';
@@ -22,20 +22,20 @@ const columns = [
         name: 'Title',
         selector: 'title',
         sortable: true,
-        cell: row => <div><Avatar maxInitials='1' name={row.title} verticalAlign='middle' size='30px' round='5px'/><Link to={`/project/${row._id}`}> {row.title}</Link></div>,
+        cell: row => <div><Avatar maxInitials='1' name={row.title} verticalAlign='middle' size='30px' round='5px' /><Link to={`/project/${row._id}`}> {row.title}</Link></div>,
     },
     {
         name: 'Last updated',
         selector: 'date',
         sortable: true,
         right: true,
-        cell: row => <ReactTimeAgo date={row.last_updated_at} locale="en"/>,
+        cell: row => <ReactTimeAgo date={row.last_updated_at} locale="en" />,
     },
 ];
 
 const ExpandedComponent = ({ data }) => (
     <Segment attached='bottom'>
-        <ReactMarkdown source={data.description}/>
+        <ReactMarkdown source={data.description} />
     </Segment>
 );
 
@@ -65,7 +65,7 @@ class Projects extends Component {
                         data={projects}
                         noHeader={true}
                         striped={true}
-                        expandableRowsComponent={<ExpandedComponent/>}
+                        expandableRowsComponent={<ExpandedComponent />}
                         expandableRows
                         expandOnRowClicked
                         pagination

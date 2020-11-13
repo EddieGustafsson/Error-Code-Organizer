@@ -34,21 +34,21 @@ export default class SearchExampleStandard extends Component {
 
   render() {
     const { isLoading, value, results } = this.state
-
+    
     return (
       <Segment>
-          <Search
-            fluid
-            input={{ fluid: true, placeholder: 'Search...' }}
-            loading={isLoading}
-            onResultSelect={this.handleResultSelect}
-            onSearchChange={_.debounce(this.handleSearchChange, 500, {
-              leading: true,
-            })}
-            results={results}
-            value={value}
-            {...this.props}
-          />
+        <Search
+          fluid
+          input={{ fluid: true, placeholder: 'Search...' }}
+          loading={isLoading}
+          onResultSelect={this.handleResultSelect}
+          onSearchChange={_.debounce(this.handleSearchChange, 500, {
+            leading: true,
+          })}
+          results={results}
+          value={value}
+          {...this.props}
+        />
       </Segment>
     )
   }
