@@ -15,7 +15,7 @@ import API from '../api/apiMap';
 // Validate token and load ther user.
 export const loadUser = () => (dispatch, getState) => {
     // User loading
-    dispatch({ type: USER_LOADING});
+    dispatch({ type: USER_LOADING });
 
     axios.get(API.user, tokenConfig(getState))
         .then(res => dispatch({
@@ -85,20 +85,20 @@ export const logout = () => {
 
 // Setup config/headers end token
 export const tokenConfig = getState => {
-        // Get token from localstorage
-        const token = getState().auth.token;
+    // Get token from localstorage
+    const token = getState().auth.token;
 
-        // Set headers
-        const config = {
-            headers: {
-                "Content-type": "application/json"
-            }
+    // Set headers
+    const config = {
+        headers: {
+            "Content-type": "application/json"
         }
-    
-        // If token, add to headers
-        if(token) {
-            config.headers['x-auth-token'] = token;
-        }
+    }
 
-        return config;
+    // If token, add to headers
+    if (token) {
+        config.headers['x-auth-token'] = token;
+    }
+
+    return config;
 }
