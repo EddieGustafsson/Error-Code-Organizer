@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Menu, Segment, Input, Dropdown, Icon } from 'semantic-ui-react'
+import { Menu, Segment, Input, Dropdown, Icon } from 'semantic-ui-react';
+import CreateProjectModal from '../components/modals/CreateProjectModal';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../actions/authActions';
 import { connect } from 'react-redux';
@@ -33,7 +34,7 @@ class Navbar extends Component {
           <Menu.Menu position='right'>
             <Dropdown item text="New">
               <Dropdown.Menu>
-                <Dropdown.Item>New project</Dropdown.Item>
+                <CreateProjectModal dropdownItem={true} />
                 <Dropdown.Item>Test 2</Dropdown.Item>
                 <Dropdown.Item>Test 3</Dropdown.Item>
               </Dropdown.Menu>

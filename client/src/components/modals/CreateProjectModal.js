@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button, Icon, Form, Message } from 'semantic-ui-react'
+import { Modal, Button, Icon, Form, Message, Dropdown } from 'semantic-ui-react'
 
 import { connect } from 'react-redux';
 import { createProject, getProjects } from '../../actions/projectActions';
@@ -64,10 +64,14 @@ class CreateProjectModal extends Component {
                 open={this.state.modalOpen}
                 onClose={this.handleClose} 
                 trigger={
-                    <Button icon positive floated='right' labelPosition='left' onClick={this.handleOpen}>
+
+                    this.props.dropdownItem ?
+                        <Dropdown.Item onClick={this.handleOpen}>Create project</Dropdown.Item>
+                    :   
+                        <Button icon positive floated='right' labelPosition='left' onClick={this.handleOpen}>
                         <Icon name='add' />
-                        Create project
-                    </Button>
+                            Create project
+                        </Button>
                 }>
                 <Modal.Header>Create a project</Modal.Header>
                 <Modal.Content>
