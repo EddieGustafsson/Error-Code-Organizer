@@ -1,19 +1,19 @@
 import axios from 'axios';
 import API from '../api/apiMap';
-import { 
-    GET_PROJECTS, 
-    GET_PROJECT, 
-    CREATE_PROJECT, 
-    UPDATE_PROJECT, 
-    ARCHIVE_PROJECT, 
-    EXPORT_PROJECT, 
+import {
+    GET_PROJECTS,
+    GET_PROJECT,
+    CREATE_PROJECT,
+    UPDATE_PROJECT,
+    ARCHIVE_PROJECT,
+    EXPORT_PROJECT,
     DELETE_PROJECT,
     PROJECT_LOADING
 } from './types';
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 
-export const getProjects = ()  => (dispatch, getState) => {
+export const getProjects = () => (dispatch, getState) => {
     dispatch(setProjectLoading());
     axios
         .get(API.project, tokenConfig(getState))
@@ -21,7 +21,7 @@ export const getProjects = ()  => (dispatch, getState) => {
             type: GET_PROJECTS,
             payload: res.data
         }))
-        .catch(error => 
+        .catch(error =>
             dispatch(returnErrors(error.response.data, error.response.status))
         );
 }
@@ -34,7 +34,7 @@ export const getProject = (id) => (dispatch, getState) => {
             type: GET_PROJECT,
             payload: res.data
         }))
-        .catch(error => 
+        .catch(error =>
             dispatch(returnErrors(error.response.data, error.response.status))
         );
 }
@@ -46,7 +46,7 @@ export const createProject = (project) => (dispatch, getState) => {
             type: CREATE_PROJECT,
             payload: res.data
         }))
-        .catch(error => 
+        .catch(error =>
             dispatch(returnErrors(error.response.data, error.response.status))
         );
     dispatch(getProjects());
@@ -59,7 +59,7 @@ export const updateProject = (id, project) => (dispatch, getState) => {
             type: UPDATE_PROJECT,
             payload: res.data
         }))
-        .catch(error => 
+        .catch(error =>
             dispatch(returnErrors(error.response.data, error.response.status))
         );
 }
@@ -85,7 +85,7 @@ export const deleteProject = (id) => (dispatch, getState) => {
             type: DELETE_PROJECT,
             payload: res.data
         }))
-        .catch(error => 
+        .catch(error =>
             dispatch(returnErrors(error.response.data, error.response.status))
         );
 }

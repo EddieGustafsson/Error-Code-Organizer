@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import { register } from '../../actions/authActions';
 import { clearErrors } from '../../actions/errorActions';
 
-class UserRegisterForm extends Component {   
+class UserRegisterForm extends Component {
 
-    state = { 
+    state = {
         userName: "",
         userEmail: "",
         userPassword: "",
@@ -31,17 +31,17 @@ class UserRegisterForm extends Component {
         const { error } = this.props;
         if (error !== prevProps.error) {
             // Check for register error
-            if(error.id === 'REGISTER_FAIL') {
+            if (error.id === 'REGISTER_FAIL') {
                 this.setState({ errorMessage: error.message });
             } else {
-                this.setState({errorMessage: null});
+                this.setState({ errorMessage: null });
             }
         }
 
     }
 
     onChange = e => {
-        this.setState({ [e.target.name]: e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     };
 
     submitRegistrationForm = (e) => {
@@ -76,7 +76,7 @@ class UserRegisterForm extends Component {
     render() {
 
         if (this.props.isAuthenticated) {
-            return(
+            return (
                 <Redirect to="/projects" />
             )
         }
@@ -86,7 +86,7 @@ class UserRegisterForm extends Component {
                 <Form error={this.state.formError} loading={this.state.formLoading}>
                     <Form.Field>
                         <Form.Input
-                            label='Name' 
+                            label='Name'
                             name='userName'
                             value={this.state.userName}
                             onChange={this.onChange}
@@ -94,7 +94,7 @@ class UserRegisterForm extends Component {
                     </Form.Field>
                     <Form.Field>
                         <Form.Input
-                            label='Email' 
+                            label='Email'
                             type='email'
                             name='userEmail'
                             value={this.state.userEmail}
@@ -119,16 +119,16 @@ class UserRegisterForm extends Component {
                             onChange={this.onChange}
                         />
                     </Form.Field>
-                    <Button 
+                    <Button
                         positive
                         fluid
-                        type='submit' 
-                        loading={this.state.formLoading} 
-                        disabled={!this.state.userPassword2} 
+                        type='submit'
+                        loading={this.state.formLoading}
+                        disabled={!this.state.userPassword2}
                         onClick={this.submitRegistrationForm}
                     >Register account</Button>
                 </Form>
-                { this.state.errorMessage ? <Message header='Faild to register account' list={this.state.errorMessage} negative/> : null }
+                { this.state.errorMessage ? <Message header='Faild to register account' list={this.state.errorMessage} negative /> : null}
             </div>
         )
     }

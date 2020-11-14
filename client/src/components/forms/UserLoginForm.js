@@ -8,7 +8,7 @@ import { clearErrors } from '../../actions/errorActions';
 
 class UserLoginForm extends Component {
 
-    state = { 
+    state = {
         userEmail: "",
         userPassword: "",
 
@@ -29,17 +29,17 @@ class UserLoginForm extends Component {
         const { error } = this.props;
         if (error !== prevProps.error) {
             // Check for login error
-            if(error.id === 'LOGIN_FAIL') {
+            if (error.id === 'LOGIN_FAIL') {
                 this.setState({ errorMessage: error.message.error.message });
             } else {
-                this.setState({errorMessage: null});
+                this.setState({ errorMessage: null });
             }
         }
 
     }
 
     onChange = e => {
-        this.setState({ [e.target.name]: e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     };
 
     submitLoginForm = (e) => {
@@ -72,7 +72,7 @@ class UserLoginForm extends Component {
     render() {
 
         if (this.props.isAuthenticated) {
-            return(
+            return (
                 <Redirect to="/projects" />
             )
         }
@@ -82,7 +82,7 @@ class UserLoginForm extends Component {
                 <Form error={this.state.formError} loading={this.state.formLoading}>
                     <Form.Field>
                         <Form.Input
-                            label='Email' 
+                            label='Email'
                             type='email'
                             name='userEmail'
                             value={this.state.userEmail}
@@ -98,20 +98,20 @@ class UserLoginForm extends Component {
                             onChange={this.onChange}
                         />
                     </Form.Field>
-                    <Button 
+                    <Button
                         positive
                         fluid
-                        type='submit' 
-                        loading={this.state.formLoading} 
-                        disabled={!this.state.userEmail} 
+                        type='submit'
+                        loading={this.state.formLoading}
+                        disabled={!this.state.userEmail}
                         onClick={this.submitLoginForm}
                     >Login</Button>
                 </Form>
-                { this.state.errorMessage ? <Message header='Failed to login account' content={this.state.errorMessage} negative/> : null }
+                { this.state.errorMessage ? <Message header='Failed to login account' content={this.state.errorMessage} negative /> : null}
             </div>
         )
     }
-  }
+}
 
 
 const mapStateToProps = state => ({

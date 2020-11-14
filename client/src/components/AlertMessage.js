@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 class AlertMessage extends React.Component {
 
-    state = { 
+    state = {
         errorStatus: null,
         errorMessage: null
     };
@@ -26,18 +26,18 @@ class AlertMessage extends React.Component {
 
     render() {
 
-        switch(this.state.errorStatus) {
+        switch (this.state.errorStatus) {
             case 403:
             case 500:
-                return(
+                return (
                     <Message header='FAILURE' content={this.state.errorMessage} icon='exclamation triangle' negative />
                 )
             case 401:
-                return(
+                return (
                     <Message header='WARNING' content={this.state.errorMessage} icon='exclamation triangle' warning />
                 )
             default:
-                return(null)
+                return (null)
         }
 
     }
