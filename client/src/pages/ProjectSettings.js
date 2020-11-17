@@ -9,28 +9,9 @@ import ExportProjectModal from "../components/modals/ExportProjectModal";
 
 function ProjectSettings({ match }) {
 
-    const fetchProject = () => fetch(API.project + match.params.id)
-        .then(res => (res.ok ? res : Promise.reject))
-        .then(res => res.json());
-
     const generalForm = [
         <Tab.Pane attached={false} style={{ minHeight: '50vh' }}>
-            <Async promiseFn={fetchProject}>
-                <Async.Fulfilled>
-                    {data => {
-                        return (
-                            <ProjectSettingsForm data={data} />
-                        )
-                    }}
-                </Async.Fulfilled>
-                <Async.Rejected>
-                    <Message
-                        error
-                        header='Could not fetch project'
-                        content='Reload the page and try again.'
-                    />
-                </Async.Rejected>
-            </Async>
+            <ProjectSettingsForm projectId={match.params.id} />
         </Tab.Pane>
     ]
 

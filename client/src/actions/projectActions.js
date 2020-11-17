@@ -1,7 +1,6 @@
 import axios from 'axios';
 import API from '../api/apiMap';
 import {
-    GET_PROJECTS,
     GET_PROJECT,
     CREATE_PROJECT,
     UPDATE_PROJECT,
@@ -11,20 +10,8 @@ import {
     PROJECT_LOADING
 } from './types';
 import { tokenConfig } from './authActions';
+import { getProjects } from './projectsActions';
 import { returnErrors } from './errorActions';
-
-export const getProjects = () => (dispatch, getState) => {
-    dispatch(setProjectLoading());
-    axios
-        .get(API.project, tokenConfig(getState))
-        .then(res => dispatch({
-            type: GET_PROJECTS,
-            payload: res.data
-        }))
-        .catch(error =>
-            dispatch(returnErrors(error.response.data, error.response.status))
-        );
-}
 
 export const getProject = (id) => (dispatch, getState) => {
     dispatch(setProjectLoading());

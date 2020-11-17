@@ -10,7 +10,6 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    projects: [],
     project: [],
     erros: [],
     loading: false
@@ -18,12 +17,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case GET_PROJECTS:
-            return {
-                ...state,
-                projects: action.payload,
-                loading: false
-            }
         case GET_PROJECT:
             return {
                 ...state,

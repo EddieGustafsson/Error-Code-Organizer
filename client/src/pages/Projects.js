@@ -6,7 +6,7 @@ import ReactTimeAgo from 'react-time-ago';
 import JavascriptTimeAgo from 'javascript-time-ago'
 
 import { connect } from 'react-redux';
-import { getProjects } from '../actions/projectActions';
+import { getProjects } from '../actions/projectsActions';
 import PropTypes from 'prop-types';
 
 import { Segment, Header, Grid } from 'semantic-ui-react';
@@ -46,7 +46,7 @@ class Projects extends Component {
     }
 
     render() {
-        const { projects } = this.props.project.projects;
+        const { projects } = this.props.projects.projects;
         return (
             <div>
                 <Segment vertical>
@@ -78,11 +78,11 @@ class Projects extends Component {
 
 Projects.propTypes = {
     getProjects: PropTypes.func.isRequired,
-    project: PropTypes.object.isRequired
+    projects: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    project: state.project
+    projects: state.projects
 });
 
 export default connect(mapStateToProps, { getProjects })(Projects);
