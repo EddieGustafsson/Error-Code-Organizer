@@ -27,10 +27,17 @@ class ProjectSettingsForm extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error } = this.props;
+        const { error, project } = this.props;
+
         if (error !== prevProps.error) {
-            this.setState({ errorMessage: error.message });
+            this.setState({ errorMessage: null });
         }
+
+        if (project !== prevProps.project && !project.loading) {
+            const { title, description } = project.project.project;
+            this.setState({ title, description });
+        }
+
     }
 
     onChange = e => {
@@ -38,16 +45,10 @@ class ProjectSettingsForm extends Component {
     };
 
     submitProjectSettingsForm = (e) => {
-        let error = false;
         this.props.clearErrors();
         e.preventDefault();
 
         this.setState({ formLoading: true });
-
-        if (error) {
-            this.setState({ formError: true });
-            return;
-        }
 
         const { title, description } = this.state;
 
@@ -60,14 +61,14 @@ class ProjectSettingsForm extends Component {
 
         this.setState({ formSuccess: true });
         this.setState({ formLoading: false });
-
     }
 
     render() {
 
         // Loads project settings form skeleton when loading
         const loading = this.props.project.loading;
-        if (this.props.project.project.length === 0 || loading) {
+        const { project } = this.props.project.project;
+        if (project === 0 || loading) {
             return(
                 <div>
                 <Form loading>
@@ -122,7 +123,6 @@ class ProjectSettingsForm extends Component {
                     <Form.Field>
                         <Form.TextArea
                             label='Project description'
-                            placeholder='Description format'
                             name='description'
                             width='15'
                             rows={6}
@@ -138,7 +138,7 @@ class ProjectSettingsForm extends Component {
                         onClick={this.submitProjectSettingsForm}
                     >Save changes</Button>
                 </Form>
-
+                { this.state.formSuccess ? <Message header='Project updated' content='Successfully updated the project' positive />  : null}
                 { this.state.errorMessage ? <Message header='Failed to update project' content={this.state.errorMessage} negative /> : null}
             </div>
         )
@@ -148,7 +148,9 @@ class ProjectSettingsForm extends Component {
 ProjectSettingsForm.propTypes = {
     getProject: PropTypes.func.isRequired,
     updateProject: PropTypes.func.isRequired,
-    project: PropTypes.object.isRequired
+    project: PropTypes.object.isRequired,
+    error: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired
 }
   
 const mapStateToProps = (state) => ({
