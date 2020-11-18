@@ -1,10 +1,6 @@
 import {
-    GET_PROJECTS,
     GET_PROJECT,
     CREATE_PROJECT,
-    UPDATE_PROJECT,
-    ARCHIVE_PROJECT,
-    EXPORT_PROJECT,
     DELETE_PROJECT,
     PROJECT_LOADING
 } from '../actions/types';
