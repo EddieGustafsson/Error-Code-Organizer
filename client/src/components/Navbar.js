@@ -43,6 +43,17 @@ class Navbar extends Component {
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
 
+            <Dropdown item text='Help'>
+              <Dropdown.Menu>
+                <Dropdown.Item>Documentation</Dropdown.Item>
+                <Dropdown.Item>Keyboard shortcuts</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer/issues/new/choose' target='_blank'>Submit feedback</Dropdown.Item>
+                <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer' target='_blank'>Contribute to ECO</Dropdown.Item>
+                <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer/releases' target='_blank'>ECO updates and releases</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+
             <Dropdown item text={<Avatar maxInitials='1' name={user.name}size='30px' round='5px' />}>
               <Dropdown.Menu>
                 <Dropdown.Header content={user.name} />
