@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { Modal, Button, Icon, Form, Message, Dropdown } from 'semantic-ui-react'
-
 import { connect } from 'react-redux';
 import { createProject } from '../../actions/projectActions';
 import { getProjects } from '../../actions/projectsActions';
-import PropTypes from 'prop-types';
 
 class CreateProjectModal extends Component {
     state = {
