@@ -34,8 +34,6 @@ class Navbar extends Component {
             <Dropdown item text="New">
               <Dropdown.Menu>
                 <CreateProjectModal dropdownItem={true} />
-                <Dropdown.Item>Test 2</Dropdown.Item>
-                <Dropdown.Item>Test 3</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
 
