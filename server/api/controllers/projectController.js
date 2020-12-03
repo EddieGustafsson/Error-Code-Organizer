@@ -5,7 +5,8 @@ const User = require("../models/userModel");
 
 module.exports = {
     index: async(req, res, next) => {
-        Project.find()
+        const user_id = req.user.id;
+        Project.find({ creator_user_id: user_id })
         .populate('error_codes')
         .exec()
         .then(docs => {
