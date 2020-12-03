@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Modal, Button, Message } from 'semantic-ui-react'
-import API from "../../api/apiMap";
+import { deleteProject } from '../../actions/projectActions';
 
-export default class RemoveProjectModal extends Component {
+class RemoveProjectModal extends Component {
 
     constructor(props) {
         super(props);
@@ -14,31 +15,30 @@ export default class RemoveProjectModal extends Component {
             formSuccess: false,
             formError: false
         };
-
-        this.removeProject = this.removeProject.bind(this);
     }
 
     handleOpen = () => this.setState({ modalOpen: true })
 
     handleClose = () => this.setState({ modalOpen: false })
 
-    removeProject() {
-        // POST request using fetch with error handling
-        const requestOptions = {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
-        };
-        fetch(API.project + this.props.projectId, requestOptions)
-            .then(async response => {
-                if (!response.ok) {
-                    this.setState({ formError: true, formLoading: false });
-                } else {
-                    this.setState({ formError: false, formSuccess: true, formLoading: false });
-                }
-            })
-            .catch(error => {
-                this.setState({ formError: true, formLoading: false });
-            });
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    submitDeleteProject = (e) => {
+        let error = false;
+        e.preventDefault();
+
+        this.setState({ formLoading: true });
+
+        if (error) {
+            this.setState({ formError: true });
+            return;
+        }
+
+        this.props.deleteProject(this.props.projectId);
+        this.setState({ formSuccess: true });
+        this.setState({ formLoading: false });
     }
 
     render() {
@@ -59,8 +59,8 @@ export default class RemoveProjectModal extends Component {
                         ?
                         <Message
                             error
-                            header="Failed to remove project"
-                            content="Something went wrong while removing your project"
+                            header="Failed to delete project"
+                            content="Something went wrong while creating your project"
                         />
                         :
                         null
@@ -78,10 +78,16 @@ export default class RemoveProjectModal extends Component {
                     }
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive type='submit' loading={this.state.formLoading} onClick={this.removeProject}>Yes</Button>
+                    <Button positive type='submit' loading={this.state.formLoading} onClick={this.submitDeleteProject}>Yes</Button>
                     <Button basic onClick={this.handleClose} floated='right'>Cancel</Button>
                 </Modal.Actions>
             </Modal>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    project: state.project
+});
+
+export default connect(mapStateToProps, { deleteProject })(RemoveProjectModal);
