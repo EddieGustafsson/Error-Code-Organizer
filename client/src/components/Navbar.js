@@ -50,7 +50,7 @@ class Navbar extends Component {
                 <Dropdown.Divider />
                 <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer/issues/new/choose' target='_blank'>Submit feedback</Dropdown.Item>
                 <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer' target='_blank'>Contribute to ECO</Dropdown.Item>
-                <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer/releases' target='_blank'>ECO updates and releases</Dropdown.Item>
+                <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer/releases' target='_blank'>Updates and releases</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
 
