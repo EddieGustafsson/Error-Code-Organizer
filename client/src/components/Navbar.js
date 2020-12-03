@@ -43,7 +43,7 @@ class Navbar extends Component {
 
             <Dropdown item text='Help'>
               <Dropdown.Menu>
-                <Dropdown.Item>Documentation</Dropdown.Item>
+                <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer/wiki' target='_blank'>Documentation</Dropdown.Item>
                 <Dropdown.Item>Keyboard shortcuts</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item href='https://github.com/EddieGustafsson/Error-Code-Organizer/issues/new/choose' target='_blank'>Submit feedback</Dropdown.Item>
