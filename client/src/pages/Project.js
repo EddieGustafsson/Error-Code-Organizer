@@ -27,6 +27,7 @@ class Project extends Component {
     const { project } = this.props.project.project;
     const loading = this.props.project.loading;
 
+    // Project page loading skeleton
     if (this.props.project.project.length === 0 || loading) {
       return (
         <div>

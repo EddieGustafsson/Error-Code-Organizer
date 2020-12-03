@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const Project = require("../models/projectModel");
+const User = require("../models/userModel");
 
 module.exports = {
     index: async(req, res, next) => {
@@ -36,10 +37,23 @@ module.exports = {
             title: req.body.title,
             description: req.body.description,
             type: req.body.type,
+            creator_user_id: req.user.id,
             last_updated_at: new Date(),
             created_at: new Date()
         });
+
         project.save().then(result => {
+
+            // Adds the project id to the user document.
+            User.updateMany({_id: req.user.id}, {$push: {projects: result._id}})
+            .exec()
+            .catch(error => {
+                console.log(error);
+                res.status(500).json({
+                    error: error
+                });
+            });
+
             res.status(201).json({
                 message: 'Project were created',
                 createdProject: {

@@ -131,6 +131,7 @@ module.exports = {
     },
     getUser: async(req, res, next) => {
       User.findById(req.user.id)
+        .populate('projects', ('_id', 'title', 'description'))
         .select('-password')
         .then(user => res.json(user))
     }
