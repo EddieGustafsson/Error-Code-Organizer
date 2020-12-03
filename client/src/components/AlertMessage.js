@@ -8,7 +8,7 @@ class AlertMessage extends React.Component {
 
     state = {
         errorStatus: null,
-        errorMessage: null
+        errorMessage: 'Sorry! Something went wrong. Check for network issues and Javascript console errors.'
     };
 
     static propTypes = {
