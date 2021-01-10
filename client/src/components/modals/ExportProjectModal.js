@@ -54,12 +54,12 @@ export default class ExportProjectModal extends Component {
                 }>
                 <Modal.Header>Export project</Modal.Header>
                 <Modal.Content>
-                    <p>Are you sure you want to archive this export?</p>
+                    <p>Are you sure you want to export this export?</p>
                     {this.state.formError
                         ?
                         <Message
                             error
-                            header="Failed to archive project"
+                            header="Failed to export project"
                             content="Something went wrong while archiving your exporting"
                         />
                         :
