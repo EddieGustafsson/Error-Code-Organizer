@@ -17,6 +17,7 @@ export const GET_ERROR_CODE     = 'GET_ERROR_CODE';
 export const CREATE_ERROR_CODE  = 'CREATE_ERROR_CODE';
 export const UPDATE_ERROR_CODE  = 'UPDATE_ERROR_CODE';
 export const DELETE_ERROR_CODE  = 'DELETE_ERROR_CODE';
+export const ERROR_CODE_LOADING = 'ERROR_CODE_LOADING';
 
 // User auth
 export const USER_LOADING       = 'USER_LOADING';
