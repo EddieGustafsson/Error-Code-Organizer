@@ -34,7 +34,7 @@ const columns = [
 ];
 
 const ExpandedComponent = ({ data }) => (
-    <Segment attached='bottom'>
+    <Segment vertical>
         <ReactMarkdown source={data.description} />
     </Segment>
 );
