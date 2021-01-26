@@ -55,10 +55,10 @@ class Navbar extends Component {
             <Dropdown item text={<Avatar maxInitials='1' name={user.name}size='30px' round='5px' />}>
               <Dropdown.Menu>
                 <Dropdown.Header content={user.name} />
-                <Dropdown.Item disabled>{user.email}</Dropdown.Item>
+                <Dropdown.Item disabled>@{user.username}</Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item as={NavLink} activeClassName="active" to={`/user/${user._id}`}>Profile</Dropdown.Item>
-                <Dropdown.Item as={NavLink} activeClassName="active" to={`/user/${user._id}/settings`}>Settings</Dropdown.Item>
+                <Dropdown.Item as={NavLink} activeClassName="active" to={`/user/${user.username}`} exact>Profile</Dropdown.Item>
+                <Dropdown.Item as={NavLink} activeClassName="active" to={`/user/${user.username}/settings`}>Settings</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={this.props.logout}>Logout</Dropdown.Item>
               </Dropdown.Menu>

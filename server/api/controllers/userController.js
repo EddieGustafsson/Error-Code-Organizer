@@ -18,9 +18,12 @@ module.exports = {
           return res.status(400).json(errors);
         }
 
-        User.findOne({ email: req.body.email }).then(user => {
+        User.findOne({$or: [
+            {email: req.body.email},
+            {username: req.body.username}
+          ]}).then(user => {
             if (user) {
-              return res.status(400).json({ email: "Email already exists" });
+              return res.status(400).json({ message: "User already exists with that email AND/OR username" });
             } else {
 
               const id = mongoose.Types.ObjectId();
@@ -28,6 +31,7 @@ module.exports = {
               const newUser = new User({
                 _id: id,
                 name: req.body.name,
+                username: req.body.username,
                 email: req.body.email,
                 password: req.body.password
               });
@@ -95,7 +99,8 @@ module.exports = {
                 // Create JWT Payload
                 const payload = {
                   id: user.id,
-                  name: user.name
+                  name: user.name,
+                  username: user.username
                 };
 
                 // Sign token
@@ -112,6 +117,7 @@ module.exports = {
                       user: {
                         id: user.id,
                         name: user.name,
+                        username: user.username,
                         email: user.email
                       }
                     });
