@@ -52,7 +52,7 @@ class Navbar extends Component {
               </Dropdown.Menu>
             </Dropdown>
 
-            <Dropdown item text={<Avatar maxInitials='1' name={user.name}size='30px' round='5px' />}>
+            <Dropdown item text={<Avatar maxInitials='1' name={user.username}size='30px' round='5px' />}>
               <Dropdown.Menu>
                 <Dropdown.Header content={user.name} />
                 <Dropdown.Item disabled>@{user.username}</Dropdown.Item>
