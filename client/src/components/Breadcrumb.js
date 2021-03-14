@@ -25,6 +25,16 @@ function Breadcrumbhead() {
             };
         }
 
+        if (p === 'user') {
+            return {
+                key: i,
+                content: 'User',
+                href: '',
+                active: false,
+                link: false
+            };
+        }
+
         if (i === arr.length - 1) return {
             key: i,
             content: capitalizeFirstLetter(p),

@@ -8,6 +8,13 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'project'
     }],
+    bio: {type: String, default: '' },
+    url: {type: String, default: '' },
+    location: {type: String, default: '' },
+    settings: {
+        theme: {type: String, enum: ['light', 'dark'], default: 'light'},
+        show_projects: {type: Boolean, default: true }
+    },
     password: {type: String, required: true},
     created_at: {type: Date, default: Date.now}
 });

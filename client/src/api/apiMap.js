@@ -4,9 +4,10 @@ const API = {
   "project": `${BASE_API}/project/`,
   "error_code": `${BASE_API}/error_code/`,
   "error_codes": `${BASE_API}/error_codes/`,
-  "user": `${BASE_API}/auth/user/`,
+  "auth": `${BASE_API}/auth/user/`,
   "login": `${BASE_API}/auth/login/`,
-  "register": `${BASE_API}/auth/register/`
+  "register": `${BASE_API}/auth/register/`,
+  "user": `${BASE_API}/user/`
 }
 
 export default API

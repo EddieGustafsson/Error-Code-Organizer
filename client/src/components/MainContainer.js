@@ -12,9 +12,11 @@ import { Loader } from 'semantic-ui-react';
 const Project = lazy(() => import("../pages/Project"));
 const Projects = lazy(() => import("../pages/Projects"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
+const ProfilePage = lazy(() => import("../pages/ProfilePage"));
 const ProjectSidebar = lazy(() => import("../components/ProjectSidebar"));
 const ProjectActivity = lazy(() => import("../pages/ProjectActivity"));
 const ProjectSettings = lazy(() => import("../pages/ProjectSettings"));
+const ProfileSettings = lazy(() => import("../pages/ProfileSettings"));
 
 class MainContainer extends React.Component {
     render() {
@@ -45,6 +47,8 @@ class MainContainer extends React.Component {
                                         <Route exact path="/project/:id" component={Project} />
                                         <Route exact path="/project/:id/activity" component={ProjectActivity} />
                                         <Route exact path="/project/:id/settings" component={ProjectSettings} />
+                                        <Route exact path="/user/:username" component={ProfilePage}/>
+                                        <Route exact path="/user/:id/settings" component={ProfileSettings} />
                                     </Switch>
                                 </Suspense>
                             </Segment>

@@ -10,6 +10,7 @@ const errorCodesRoutes = require('./api/routes/error_codes');
 const errorCodeRoutes = require('./api/routes/error_code');
 const authRoutes = require('./api/routes/auth');
 const statusRoutes = require('./api/routes/status');
+const userRoutes = require('./api/routes/user');
 
 const auth = require('./api/middleware/auth');
 
@@ -54,7 +55,7 @@ app.use('/v1/error_codes', auth, errorCodesRoutes);
 app.use('/v1/error_code', auth, errorCodeRoutes);
 app.use('/v1/auth', authRoutes);
 app.use('/v1/status', statusRoutes);
-
+app.use('/v1/user', auth, userRoutes);
 
 //Handles errors
 app.use((req, res, next) => {

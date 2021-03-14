@@ -59,6 +59,7 @@ module.exports = {
                       user: {
                         id,
                         name: newUser.name,
+                        username: newUser.username,
                         email: newUser.email
                       }
                     }))
@@ -138,7 +139,13 @@ module.exports = {
     getUser: async(req, res, next) => {
       User.findById(req.user.id)
         .populate('projects', ('_id', 'title', 'description'))
-        .select('-password')
+        .select('-password -bio -url -__v')
+        .then(user => res.json(user))
+    },
+    getUserProfile: async(req, res, next) => {
+      User.findOne({username: req.params.username})
+        .populate('projects', ('_id', 'title', 'description'))
+        .select('-_id -settings -password -__v')
         .then(user => res.json(user))
     }
 };
