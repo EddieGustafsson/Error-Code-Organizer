@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import Async from 'react-async';
 import ReactTimeAgo from 'react-time-ago';
-import { Label, Segment, Message, Button, Icon } from 'semantic-ui-react';
+import { Label, Button, Icon } from 'semantic-ui-react';
 import DataTable from 'react-data-table-component';
-import API from "../../api/apiMap";
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 

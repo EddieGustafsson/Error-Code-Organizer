@@ -1,7 +1,5 @@
 import React from 'react';
-import Async from 'react-async';
-import { Segment, Message, Button, Tab, Grid, Header } from 'semantic-ui-react';
-import API from "../api/apiMap";
+import { Segment, Message, Tab, Grid, Header } from 'semantic-ui-react';
 import ProjectSettingsForm from "../components/forms/ProjectSettingsForm";
 import RemoveProjectModal from "../components/modals/RemoveProjectModal";
 import ArchiveProjectModal from "../components/modals/ArchiveProjectModal";

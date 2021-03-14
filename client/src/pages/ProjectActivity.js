@@ -1,13 +1,7 @@
 import React from 'react';
-import Async from 'react-async';
-import { Segment, Message, Tab, Feed, Grid, Icon } from 'semantic-ui-react';
-import API from "../api/apiMap";
+import { Segment, Tab, Feed, Grid, Icon } from 'semantic-ui-react';
 
 function ProjectActivity({ match }) {
-
-    const fetchProject = () => fetch(API.project + match.params.id)
-        .then(res => (res.ok ? res : Promise.reject))
-        .then(res => res.json());
 
     const panes = [
         {
@@ -82,34 +76,9 @@ function ProjectActivity({ match }) {
     ]
 
     return (
-        <Async promiseFn={fetchProject}>
-            <Async.Loading>
-                <Segment loading vertical>
-                    <br></br>
-                    <br></br>
-                </Segment>
-            </Async.Loading>
-
-            <Async.Fulfilled>
-                {data => {
-                    return (
-                        <div>
-                            {[data].map(data => (
-                                <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
-                            ))}
-                        </div>
-                    )
-                }}
-            </Async.Fulfilled>
-
-            <Async.Rejected>
-                <Message
-                    error
-                    header='Could not fetch project'
-                    content='Reload the page and try again.'
-                />
-            </Async.Rejected>
-        </Async>
+        <div>
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+        </div>
     );
 }
 

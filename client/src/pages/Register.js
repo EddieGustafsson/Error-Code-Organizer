@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Container, Header, Segment, Message } from 'semantic-ui-react';
+import { Grid, Container, Segment } from 'semantic-ui-react';
 import UserRegisterForm from '../components/forms/UserRegisterForm';
 import SmallNavbar from '../components/SmallNavbar';
 

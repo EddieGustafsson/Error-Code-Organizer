@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Avatar from 'react-avatar';
 import Moment from 'react-moment';
 import { Segment, Tab, Button, List, Grid, Header, Card, Placeholder, Image } from 'semantic-ui-react';
 
@@ -150,7 +149,7 @@ class ProfilePage extends Component {
                                                 <List.Item>
                                                     <List.Icon name='linkify' />
                                                     <List.Content>
-                                                        <a href={user.url} target='_blank'>{user.url}</a>
+                                                        <a href={user.url} target='_blank' rel="noreferrer">{user.url}</a>
                                                     </List.Content>
                                                 </List.Item>
                                                 : null

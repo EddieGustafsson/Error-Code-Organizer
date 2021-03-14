@@ -1,5 +1,5 @@
 import { Container } from 'semantic-ui-react';
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { List, Segment, Header } from 'semantic-ui-react';
 import packageJson from '../../package.json';
 

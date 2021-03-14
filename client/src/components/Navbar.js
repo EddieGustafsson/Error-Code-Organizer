@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Menu, Segment, Input, Dropdown, Icon } from 'semantic-ui-react';
+import { Menu, Segment, Dropdown, Icon } from 'semantic-ui-react';
 import CreateProjectModal from '../components/modals/CreateProjectModal';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../actions/authActions';
 import { connect } from 'react-redux';
+import NavSearchbar from './NavSearchbar';
 import PropTypes from 'prop-types';
 import Avatar from 'react-avatar';
 
@@ -38,7 +39,7 @@ class Navbar extends Component {
             </Dropdown>
 
             <Menu.Item>
-              <Input icon='search' placeholder='Search...' />
+                <NavSearchbar />
             </Menu.Item>
 
             <Dropdown item text='Help'>
