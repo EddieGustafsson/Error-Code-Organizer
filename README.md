@@ -21,18 +21,18 @@ No public documentation will be provided as of now.
 
 ## Demo pictures
 ### Projects
-![](https://i.imgur.com/nP45Zbs.png)
+![](https://i.imgur.com/khGkjc3.png)
 
 ### Project details
-![](https://i.imgur.com/8IhYfVO.png)
+![](https://i.imgur.com/AUjVkrc.png)
 
 ### Project activity
-![](https://i.imgur.com/mFjRRt3.png)
+![](https://i.imgur.com/lSsDepP.png)
 
 ### Project settings
-![](https://i.imgur.com/MVKmRRo.png)
+![](https://i.imgur.com/371iChc.png)
 
-![](https://i.imgur.com/qxki5xF.png)
+![](https://i.imgur.com/ILPWKLV.png)
 
 ### Login
 ![](https://i.imgur.com/VwlJ2ax.png)
