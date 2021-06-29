@@ -1,6 +1,6 @@
 // Projects
 export const GET_PROJECTS       = 'GET_PROJECTS';
-export const PROJECTS_LOADING    = 'PROJECT_LOADING';
+export const PROJECTS_LOADING   = 'PROJECT_LOADING';
 
 // Project
 export const GET_PROJECT        = 'GET_PROJECT';
