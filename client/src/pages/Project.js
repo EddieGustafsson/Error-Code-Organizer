@@ -123,10 +123,10 @@ class Project extends Component {
         <Message>
           <Feed>
             <Feed.Event>
-              <Feed.Label image='https://secure.gravatar.com/avatar/b22ea4f703aacb0d99a753c539c1097d?s=80&d=identicon' />
+              <Feed.Label image={<Avatar maxInitials='1' name='EddieGustafsson' verticalAlign='middle' size='45px' round='5px' />} />
               <Feed.Content>
                 <Feed.Date>3 days ago</Feed.Date>
-                <Feed.Summary><a href='/profile/eddiegustafsson'>Eddie Gustafsson</a> created Error code</Feed.Summary>
+                <Feed.Summary><a href='/user/EddieGustafsson'>Eddie Gustafsson</a> created Error code</Feed.Summary>
               </Feed.Content>
             </Feed.Event>
           </Feed>

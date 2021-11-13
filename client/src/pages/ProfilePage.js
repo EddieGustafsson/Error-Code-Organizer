@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment';
-import { Segment, Tab, Button, List, Grid, Header, Card, Placeholder, Image } from 'semantic-ui-react';
-
+import { Segment, Tab, Button, List, Grid, Header, Card, Placeholder } from 'semantic-ui-react';
+import ProjcetsTable from '../components/tables/ProjectsTable';
 import { connect } from 'react-redux';
 import { getProfile} from '../actions/profileActions';
 import PropTypes from 'prop-types';
-
+import Avatar from 'react-avatar';
 class ProfilePage extends Component {
 
     constructor(props) {
@@ -25,21 +25,6 @@ class ProfilePage extends Component {
         const authUser = this.props.auth.user;
         const loading = this.props.profile.loading;
 
-        const panes = [
-            {
-              menuItem: 'Overview',
-              render: () => <Tab.Pane attached={false} style={{ minHeight: '54vh' }}>Profile overview</Tab.Pane>,
-            },
-            {
-              menuItem: 'Projects',
-              render: () => <Tab.Pane attached={false} style={{ minHeight: '54vh' }}>Projects</Tab.Pane>,
-            },
-            {
-              menuItem: 'Tab 3',
-              render: () => <Tab.Pane attached={false} style={{ minHeight: '54vh' }}>Tab 3 Content</Tab.Pane>,
-            },
-        ]
-          
         // Profile page loading skeleton 
         if (this.props.profile.user.length === 0 || loading) {
             return (
@@ -98,6 +83,17 @@ class ProfilePage extends Component {
             )
         }
 
+        const panes = [
+            {
+              menuItem: 'Overview',
+              render: () => <Tab.Pane attached={false} style={{ minHeight: '54vh' }}>Profile overview</Tab.Pane>,
+            },
+            {
+              menuItem: 'Projects',
+              render: () => <Tab.Pane attached={false} style={{ minHeight: '54vh' }}><ProjcetsTable projectsData={user.projects}/></Tab.Pane>,
+            }
+        ]
+
         return (
             <div>
                 <Segment vertical >
@@ -112,8 +108,10 @@ class ProfilePage extends Component {
                         <Grid.Row>
                             <Grid.Column width={4}>
                                 <Card>
-                                    <Image src='https://avatars.githubusercontent.com/u/55538121?s=460&v=4' wrapped ui={false} />
-                                    <Card.Content>
+                                    <Card.Content textAlign='center'>
+                                        <div style={{paddingBottom: "5%"}}>
+                                            <Avatar maxInitials='1' name={user.username} size='200px' round='5px' />
+                                        </div>
                                         <Card.Header>{user.name}</Card.Header>
                                         <Card.Meta>
                                             <span className='date'>@{user.username}</span>

@@ -11,4 +11,7 @@ router.route('/:projectId')
     .patch(ProjectController.updatedProject)
     .delete(ProjectController.deleteProject);
 
+router.route('/:projectId/events')
+    .get(ProjectController.getProjectEvents)
+
 module.exports = router;

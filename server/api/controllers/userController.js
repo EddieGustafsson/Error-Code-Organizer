@@ -140,12 +140,28 @@ module.exports = {
       User.findById(req.user.id)
         .populate('projects', ('_id', 'title', 'description'))
         .select('-password -bio -url -__v')
-        .then(user => res.json(user))
+        .then(user => {
+          if(user){
+            res.json(user)
+          } else {
+            res.status(404).json({
+              message: 'No valid entry found for provided username'
+            });
+          }
+        })
     },
     getUserProfile: async(req, res, next) => {
       User.findOne({username: req.params.username})
-        .populate('projects', ('_id', 'title', 'description'))
+        .populate('projects', ('_id title last_updated_at'))
         .select('-_id -settings -password -__v')
-        .then(user => res.json(user))
+        .then(user => {
+          if(user){
+            res.json(user)
+          } else {
+            res.status(404).json({
+              message: 'No valid entry found for the provided username'
+            });
+          }
+        })
     }
 };

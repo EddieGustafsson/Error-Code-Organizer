@@ -2,12 +2,13 @@ import _ from 'lodash'
 import faker from 'faker'
 import React from 'react'
 import { Search } from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import { getProjects } from '../actions/projectsActions';
+import PropTypes from 'prop-types';
 
 const source = _.times(5, () => ({
   title: faker.company.companyName(),
   description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, '$'),
 }))
 
 const initialState = {
@@ -35,8 +36,7 @@ function exampleReducer(state, action) {
 function NavSearchbar() {
   const [state, dispatch] = React.useReducer(exampleReducer, initialState)
   const { loading, results, value } = state
-
-  const timeoutRef = React.useRef()
+  const timeoutRef = React.useRef()  
   const handleSearchChange = React.useCallback((e, data) => {
     clearTimeout(timeoutRef.current)
     dispatch({ type: 'START_SEARCH', query: data.value })
@@ -75,4 +75,13 @@ function NavSearchbar() {
   )
 }
 
-export default NavSearchbar
+NavSearchbar.propTypes = {
+  getProjects: PropTypes.func.isRequired,
+  projects: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  projects: state.projects
+});
+
+export default connect(mapStateToProps, { getProjects })(NavSearchbar);

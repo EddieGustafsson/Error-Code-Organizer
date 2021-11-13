@@ -17,11 +17,12 @@ services:
       - /app/node_modules
       - ./server:/app
     environment: 
-      - MONGO_ATLAS_USERNAME=null
-      - MONGO_ATLAS_PWD=null
-      - HOST=example.com
+      - MONGO_ATLAS_USERNAME=dbUser2
+      - MONGO_ATLAS_PWD=JruWTcYcxwQZtJZu
+      - HOST=eco.edgus.dev
       - PORT=8443
-      - CORS_ORIGIN=https://example.com
+      - JWT_KEY=dwadwadawd
+      - CORS_ORIGIN=https://eco.edgus.dev
     ports:
       - '8443:8443'
   client:
@@ -31,5 +32,7 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+    environment:
+      - https://api.edgus.dev
     links:
       - api

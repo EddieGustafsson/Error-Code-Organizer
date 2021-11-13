@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const Project = require("../models/projectModel");
 const User = require("../models/userModel");
+const Audit = require('../models/auditEventModel');
+const AuditEventController = require('../controllers/auditEventController');
 
 module.exports = {
     index: async(req, res, next) => {
@@ -55,6 +57,16 @@ module.exports = {
                 });
             });
 
+            AuditEventController.newAuditEvent({
+                "action": "create",
+                "action_target": "project",
+                "action_target_id": result._id,
+                "action_value": null,
+                "actor_id": req.user.id,
+                "actor_host": "ProjectController",
+                "event_timestamp": new Date()
+            });
+
             res.status(201).json({
                 message: 'Project were created',
                 createdProject: {
@@ -62,6 +74,7 @@ module.exports = {
                     _id: result._id
                 }
             });
+
         })
         .catch(error => {
             console.log(error);
@@ -103,6 +116,17 @@ module.exports = {
             res.status(200).json({
                 message: 'Project updated'
             });
+            
+            AuditEventController.newAuditEvent({
+                "action": "update",
+                "action_target": "project",
+                "action_target_id": id,
+                "action_value": req.body,
+                "actor_id": req.user.id,
+                "actor_host": "ProjectController",
+                "event_timestamp": new Date()
+            });
+
         })
         .catch(error => {
             console.log(error);
@@ -119,12 +143,47 @@ module.exports = {
             res.status(200).json({
                 message: 'Project delted'
             });
+            
+            AuditEventController.newAuditEvent({
+                "action": "deletion",
+                "action_target": "project",
+                "action_id": id,
+                "action_value": null,
+                "actor_id": req.user.id,
+                "actor_host": "ProjectController",
+                "event_timestamp": new Date()
+            });
+
         })
         .catch(error => {
             console.log(error);
             res.status.apply(500).json({
                 error: error
             })
+        });
+    },
+    getProjectEvents: async(req, res, next) => {
+        const id = req.params.projectId;
+        Audit.find({action_target_id: id})
+        .select('_id action event_timestamp action_target')
+        .populate('actor_id', '_id name username')
+        .exec()
+        .then(doc => {            
+            if(doc){
+                res.status(200).json({
+                    events: doc
+                });
+            } else {
+                res.status(404).json({
+                    message: 'No valid entry found for provided ID'
+                });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                error: error
+            });
         });
     }
 };

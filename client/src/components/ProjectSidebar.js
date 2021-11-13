@@ -44,7 +44,7 @@ class ProjectSidebar extends Component {
     if (this.props.project.project.length === 0 || loading) {
       return (
         <div>
-          <Segment style={{ minHeight: '100%' }}>
+          <Segment>
             <Accordion as={Menu} vertical secondary>
 
               <Menu.Item header align>
@@ -84,7 +84,7 @@ class ProjectSidebar extends Component {
     }
 
     return (
-      <Segment style={{ minHeight: '100%' }}>
+      <Segment>
         <Accordion as={Menu} vertical secondary>
 
           <Menu.Item header align>

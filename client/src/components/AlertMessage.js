@@ -36,6 +36,10 @@ class AlertMessage extends React.Component {
                 return (
                     <Message header='WARNING' content={this.state.errorMessage} icon='exclamation triangle' warning />
                 )
+            case 404:
+                return (
+                    <Message header='FAILURE' content={this.state.errorMessage} icon='exclamation triangle' warning />
+                )
             default:
                 return (null)
         }

@@ -33,6 +33,12 @@ export const REGISTER_FAIL      = 'REGISTER_FAILED';
 export const GET_PROFILE        = 'GET_PROFILE';
 export const PROFILE_LOADING    = 'PROFILE_LOADING';
 
+// Search
+export const CLEAN_QUERY        = 'CLEAN_QUERY';
+export const START_SEARCH       = 'START_SEARCH';
+export const FINISH_SEARCH      = 'FINISH_SEARCH';
+export const UPDATE_SELECTION   = 'UPDATE_SELECTION';
+
 // Errors
 export const GET_ERRORS         = 'GET_ERRORS';
 export const CLEAR_ERRORS       = 'CLEAR_ERRORS';
