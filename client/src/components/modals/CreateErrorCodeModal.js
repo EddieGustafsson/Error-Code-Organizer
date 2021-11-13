@@ -1,67 +1,41 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import { Modal, Button, Icon, Form, Message } from 'semantic-ui-react'
-import API from "../../api/apiMap";
+import { createErrorCode } from '../../actions/errorCodeActions';
+import { getProject } from '../../actions/projectActions';
+class CreateErrorCodeModal extends Component {
+    state = {
+        modalOpen: false,
 
-export default class CreateErrorCodeModal extends Component {
+        code: '',
+        location: '',
+        message: '',
+        description: '',
 
-    constructor(props) {
-        super(props);
-
-        this.state = { 
-            modalOpen: false, 
-            
-            code: '',
-            location: '',
-            message: '',
-            description: '',
-
-            formLoading: false,
-            formSuccess: false,
-
-            codeError: false,
-            locationError: false,
-            descriptionError: false,
-            messageError: false, 
-            formError: false
-        };
-
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.submitErrorCodeForm = this.submitErrorCodeForm.bind(this);
-        this.createErrorCode = this.createErrorCode.bind(this);
+        formLoading: false,
+        formSuccess: false,
     }
-  
+
     handleOpen = () => this.setState({ modalOpen: true })
-  
+
     handleClose = () => this.setState({ modalOpen: false })
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.name === 'test' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-          [name]: value    
-        });
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
-    submitErrorCodeForm() {
+    submitErrorCodeForm = (e) => {
         let error = false;
+        e.preventDefault();
 
         this.setState({ formLoading: true });
-
-        if (!this.state.code.replace(/\s/g, '').length) {
-            this.setState({ codeError: true });
-            error = true;
-        } else {
-            this.setState({ codeError: false });
-        }
 
         if (error) {
             this.setState({ formError: true });
             return;
         }
 
-        let errorcode = {
+        let error_code = {
             project_id: this.props.projectId,
             code: this.state.code,
             location: this.state.location,
@@ -71,34 +45,17 @@ export default class CreateErrorCodeModal extends Component {
             created_at: new Date()
         }
 
-        this.createErrorCode(errorcode);
-    }
-
-    createErrorCode(errorcode) {
-        // POST request using fetch with error handling
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(errorcode)
-        };
-        fetch(API.error_code, requestOptions)
-            .then(async response => {
-                if(!response.ok) {
-                    this.setState({ formError: true, formLoading: false });
-                } else {
-                    this.setState({ formError: false, formSuccess: true, formLoading: false });
-                }
-            })
-            .catch(error => {
-                this.setState({ formError: true, formLoading: false });
-            });
+        this.props.createErrorCode(error_code);
+        this.props.getProject(this.props.projectId);
+        this.setState({ formSuccess: true });
+        this.setState({ formLoading: false });
     }
 
     render() {
         return (
             <Modal
                 open={this.state.modalOpen}
-                onClose={this.handleClose} 
+                onClose={this.handleClose}
                 trigger={
                     <Button icon positive floated='right' labelPosition='left' onClick={this.handleOpen}>
                         <Icon name='add' />
@@ -110,64 +67,64 @@ export default class CreateErrorCodeModal extends Component {
                     <Form error={this.state.formError} loading={this.state.formLoading}>
                         <Form.Field>
                             <Form.Input
-                                label='Code' 
+                                label='Code'
                                 placeholder='0x80020019'
                                 name='code'
                                 value={this.state.code}
-                                onChange={this.handleInputChange}
+                                onChange={this.onChange}
                                 error={this.state.codeError}
                             />
                         </Form.Field>
                         <Form.Field>
                             <Form.Input
-                                label='Location' 
+                                label='Location'
                                 placeholder='FileUpload'
                                 name='location'
                                 value={this.state.location}
-                                onChange={this.handleInputChange}
+                                onChange={this.onChange}
                                 error={this.state.locationError}
                             />
                         </Form.Field>
                         <Form.Field>
                             <Form.Input
-                                label='Message' 
+                                label='Message'
                                 placeholder='Memory full'
                                 name='message'
                                 value={this.state.message}
-                                onChange={this.handleInputChange}
+                                onChange={this.onChange}
                                 error={this.state.messageError}
                             />
                         </Form.Field>
                         <Form.Field>
-                            <Form.TextArea 
-                                label='Project description' 
-                                placeholder='Description format' 
+                            <Form.TextArea
+                                label='Error code description'
+                                placeholder='Description format'
                                 name='description'
                                 value={this.state.description}
-                                onChange={this.handleInputChange}
+                                onChange={this.onChange}
                                 error={this.state.descriptionError}
                             />
                         </Form.Field>
                     </Form>
-                    {this.state.formError 
-                    ?
-                    <Message 
-                        error
-                        header="Failed to create error code"
-                        content="Something went wrong while creating your error code"
-                    />
-                    :
-                    null
+                    {this.state.formError
+                        ?
+                        <Message
+                            error
+                            header="Failed to create error code"
+                            content="Something went wrong while creating your error code"
+                        />
+                        :
+                        null
                     }
-                    {this.state.formSuccess 
-                    ?
-                    <Message 
-                        success
-                        header="Error code created!"
-                        content="The error code has been succesfully created"
-                    />
-                    :
-                    null
+                    {this.state.formSuccess
+                        ?
+                        <Message
+                            success
+                            header="Error code created!"
+                            content="The error code has been succesfully created"
+                        />
+                        :
+                        null
                     }
                 </Modal.Content>
                 <Modal.Actions>
@@ -177,4 +134,10 @@ export default class CreateErrorCodeModal extends Component {
             </Modal>
         )
     }
-  }
+}
+
+const mapStateToProps = state => ({
+    project: state.project
+});
+
+export default connect(mapStateToProps, { createErrorCode, getProject })(CreateErrorCodeModal);

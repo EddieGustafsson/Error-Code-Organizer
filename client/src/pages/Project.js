@@ -1,109 +1,160 @@
-import React from 'react';
-import Async from 'react-async';
+import React, { Component } from 'react';
 import Moment from 'moment';
 import Avatar from 'react-avatar';
-import { Header, Segment, Message, Icon, Grid, List, Feed } from 'semantic-ui-react';
+import { Header, Segment, Message, Icon, Grid, List, Feed, Placeholder } from 'semantic-ui-react';
 import ReactMarkdown from 'react-markdown';
 import ErrorCodesTable from '../components/tables/ErrorCodesTable';
-import API from "../api/apiMap";
 
-function Post({match}) {
+import { connect } from 'react-redux';
+import { getProject } from '../actions/projectActions';
+import PropTypes from 'prop-types';
 
-  const fetchProject = () => fetch(API.project + match.params.id)
-                          .then(res => (res.ok ? res : Promise.reject))
-                          .then(res => res.json());
+class Project extends Component {
 
-  return (
-    <Async promiseFn={fetchProject}>
-        <Async.Loading>
-          <Segment loading vertical>
-            <br></br>
-            <br></br>
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      id: this.props.match.params.id
+    }
+  }
+
+  componentDidMount() {
+    this.props.getProject(this.state.id);
+  }
+
+  render() {
+    const { project } = this.props.project.project;
+    const loading = this.props.project.loading;
+
+    // Project page loading skeleton
+    if (this.props.project.project.length === 0 || loading) {
+      return (
+        <div>
+          <Segment vertical>
+            <Grid columns={2} verticalAlign='middle'>
+              <Grid.Row>
+                <Grid.Column>
+                  <Placeholder>
+                    <Placeholder.Header image>
+                      <Placeholder.Line />
+                      <Placeholder.Line />
+                    </Placeholder.Header>
+                  </Placeholder>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+            <br />
+
+            <Placeholder>
+              <Placeholder.Line />
+            </Placeholder>
+
           </Segment>
-        </Async.Loading>
 
-        <Async.Fulfilled>
-          {data => {
-            return (
-              <div>
-                  <div>
-                    <Segment vertical>
-                      {[data].map(data=> (
-                        <Grid columns={2} verticalAlign='middle'>
-                          <Grid.Row>
-                            <Grid.Column width={1}>
-                              <Avatar maxInitials='1' name={data.project.title} verticalAlign='middle' size='60px' round='5px'/>
-                            </Grid.Column>
-                            <Grid.Column>
-                              <Header as='h3'>
-                                <Header.Content>
-                                  {data.project.title}
-                                  <Header.Subheader>Project ID: {data.project._id}</Header.Subheader>
-                                </Header.Content>
-                              </Header>
-                            </Grid.Column>
-                          </Grid.Row>
-                        </Grid>
-                        ))}
-                      <br/>
+          <Message>
+            <Placeholder>
+              <Placeholder.Header image>
+                <Placeholder.Line />
+                <Placeholder.Line />
+              </Placeholder.Header>
+            </Placeholder>
+          </Message>
 
-                      <List horizontal size='small'>
-                        <List.Item>
-                          <List.Content>
-                            <Icon disabled name='exclamation triangle' /><b>{data.project.error_codes.length}</b> Error codes
-                          </List.Content>
-                        </List.Item>
-                        <List.Item>
-                          <List.Content>
-                          <Icon disabled name='tag' /><b>0</b> Tags
-                          </List.Content>
-                        </List.Item>
-                        <List.Item>
-                          <List.Content>
-                          <Icon disabled name='calendar alternate outline' /><b>{Moment(data.project.created_at).format('YYYY-MM-DD')}</b>
-                          </List.Content>
-                        </List.Item>
-                      </List>
+          <Header as='h5' attached='top'>Error codes</Header>
+          <Segment attached='bottom' loading>
+            <ErrorCodesTable />
+          </Segment>
 
-                    </Segment>
+          <Header as='h5' attached='top'>Description</Header>
+          <Segment attached='bottom'>
+            <Placeholder>
+              <Placeholder.Line />
+              <Placeholder.Line />
+              <Placeholder.Line />
+              <Placeholder.Line />
+              <Placeholder.Line />
+            </Placeholder>
+          </Segment>
+        </div>
+      )
+    }
 
-                    <Message>
-                      <Feed>
-                        <Feed.Event>
-                          <Feed.Label image='https://secure.gravatar.com/avatar/b22ea4f703aacb0d99a753c539c1097d?s=80&d=identicon' />
-                          <Feed.Content>
-                            <Feed.Date>3 days ago</Feed.Date>
-                            <Feed.Summary><a href='/profile/eddiegustafsson'>Eddie Gustafsson</a> created Error code</Feed.Summary>
-                          </Feed.Content>
-                        </Feed.Event>
-                      </Feed>
-                    </Message>
+    return (
+      <div>
+        <Segment vertical>
+          <Grid columns={2} verticalAlign='middle'>
+            <Grid.Row>
+              <Grid.Column width={1}>
+                <Avatar maxInitials='1' name={project.title} verticalAlign='middle' size='60px' round='5px' />
+              </Grid.Column>
+              <Grid.Column>
+                <Header as='h3'>
+                  <Header.Content>
+                    {project.title}
+                    <Header.Subheader>Project ID: {project._id}</Header.Subheader>
+                  </Header.Content>
+                </Header>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <br />
 
-                    <Header as='h5' attached='top'>Error codes</Header>
-                    <Segment attached='bottom'>
-                      <ErrorCodesTable projectId={data.project._id} errorCodeData={data.project.error_codes} />
-                    </Segment>
+          <List horizontal size='small'>
+            <List.Item>
+              <List.Content>
+                <Icon disabled name='exclamation triangle' /><b>{project.error_codes.length}</b> Error codes
+              </List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content>
+                <Icon disabled name='tag' /><b>0</b> Tags
+              </List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content>
+                <Icon disabled name='calendar alternate outline' /><b>{Moment(project.created_at).format('YYYY-MM-DD')}</b>
+              </List.Content>
+            </List.Item>
+          </List>
 
-                    <Header as='h5' attached='top'>Description</Header>
-                    <Segment attached='bottom'>
-                      <ReactMarkdown source={data.project.description}/>
-                    </Segment>
+        </Segment>
 
-                  </div>
-              </div>
-            )
-          }}
-        </Async.Fulfilled>
+        <Message>
+          <Feed>
+            <Feed.Event>
+              <Feed.Label image={<Avatar maxInitials='1' name='EddieGustafsson' verticalAlign='middle' size='45px' round='5px' />} />
+              <Feed.Content>
+                <Feed.Date>3 days ago</Feed.Date>
+                <Feed.Summary><a href='/user/EddieGustafsson'>Eddie Gustafsson</a> created Error code</Feed.Summary>
+              </Feed.Content>
+            </Feed.Event>
+          </Feed>
+        </Message>
 
-        <Async.Rejected>
-              <Message 
-                  error
-                  header='Could not fetch project'
-                  content='Reload the page and try again.'
-              />
-        </Async.Rejected>
-    </Async>
-  );
+        <Header as='h5' attached='top'>Error codes</Header>
+        <Segment attached='bottom'>
+          <ErrorCodesTable projectId={project._id} errorCodeData={project.error_codes} />
+        </Segment>
+
+        <Header as='h5' attached='top'>Description</Header>
+        <Segment attached='bottom'>
+          <ReactMarkdown source={project.description} />
+        </Segment>
+      </div>
+    );
+
+  }
+
 }
 
-export default Post;
+Project.propTypes = {
+  getProject: PropTypes.func.isRequired,
+  project: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  project: state.project
+});
+
+export default connect(mapStateToProps, { getProject })(Project);

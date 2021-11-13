@@ -8,6 +8,11 @@ const projectSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'error_code'
     }],
+    creator_user_id: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'user', 
+        required: true
+    },
     last_updated_at: {type: Date, required: true},
     created_at: {type: Date, required: true}
 });

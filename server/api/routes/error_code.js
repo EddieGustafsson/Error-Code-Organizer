@@ -8,7 +8,7 @@ router.route('/')
 
 router.route('/:errorCodeId')
     .get(ErrorCodeController.getErrorCode)
-    .patch(ErrorCodeController.updatedErrorCode)
+    .patch(ErrorCodeController.updateErrorCode)
     .delete(ErrorCodeController.deleteErrorCode);
     
 module.exports = router;

@@ -1,52 +1,34 @@
 import React from 'react';
-import Async from 'react-async';
-import { Segment, Message, Button, Tab, Grid, Header } from 'semantic-ui-react';
-import API from "../api/apiMap";
+import { Segment, Message, Tab, Grid, Header } from 'semantic-ui-react';
 import ProjectSettingsForm from "../components/forms/ProjectSettingsForm";
+import RemoveProjectModal from "../components/modals/RemoveProjectModal";
+import ArchiveProjectModal from "../components/modals/ArchiveProjectModal";
+import ExportProjectModal from "../components/modals/ExportProjectModal";
 
-function ProjectSettings({match}) {
-
-    const fetchProject = () => fetch(API.project + match.params.id)
-                            .then(res => (res.ok ? res : Promise.reject))
-                            .then(res => res.json());
+function ProjectSettings({ match }) {
 
     const generalForm = [
-        <Tab.Pane attached={false} style={{minHeight: '50vh'}}>
-            <Async promiseFn={fetchProject}>
-                <Async.Fulfilled>
-                    {data => {
-                        return (
-                            <ProjectSettingsForm data={data} />
-                        )
-                    }}
-                </Async.Fulfilled>
-                <Async.Rejected>
-                        <Message 
-                            error
-                            header='Could not fetch project'
-                            content='Reload the page and try again.'
-                        />
-                </Async.Rejected>
-            </Async>
+        <Tab.Pane attached={false} style={{ minHeight: '50vh' }}>
+            <ProjectSettingsForm projectId={match.params.id} />
         </Tab.Pane>
     ]
 
     const advancedForm = [
-        <Tab.Pane attached={false} style={{minHeight: '50vh'}}>
+        <Tab.Pane attached={false} style={{ minHeight: '50vh' }}>
             <Message>
                 <Header as='h3'>Export project</Header>
                 <p>Export this project with all its related data in order to move your project to a new ECO instance.</p>
-                <Button>Export project</Button>
+                <ExportProjectModal />
             </Message>
             <Message>
                 <Header as='h3' color='orange'>Archive project</Header>
                 <p>Archiving the project will make it entirely read only. It is hidden from the dashboard and doesn't show up in searches.</p>
-                <Button color='orange'>Archive project</Button>
+                <ArchiveProjectModal projectId={match.params.id} />
             </Message>
             <Message>
                 <Header as='h3' color='red'>Remove project</Header>
                 <p>Once you remove a project, there is no going back. Please be certain. </p>
-                <Button color='red'>Remove project</Button>
+                <RemoveProjectModal projectId={match.params.id} />
             </Message>
         </Tab.Pane>
     ]
@@ -70,7 +52,7 @@ function ProjectSettings({match}) {
             </Segment>
         </div>
     );
-    
+
 }
 
 export default ProjectSettings;

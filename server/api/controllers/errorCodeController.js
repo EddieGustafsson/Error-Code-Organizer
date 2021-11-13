@@ -108,7 +108,7 @@ module.exports = {
             });
         });
     },
-    updatedErrorCode: async(req, res, next) => {
+    updateErrorCode: async(req, res, next) => {
         const id = req.params.errorCodeId;
 
         ErrorCode.updateMany({_id: id}, {last_updated_at: new Date()}, {$set: req.body})
