@@ -6,12 +6,8 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-<<<<<<< HEAD
     "axios": "^0.21.1",
     "faker": "^5.2.0",
-=======
-    "axios": "^0.21.2",
->>>>>>> 10de8428224efde32b30941e7c2e4ebcab4bb73a
     "is-empty": "^1.2.0",
     "javascript-time-ago": "^2.0.10",
     "jwt-decode": "^3.1.1",
