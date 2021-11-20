@@ -14,8 +14,8 @@ class Navbar extends Component {
     const { user } = this.props.auth;
 
     return (
-      <Segment inverted raised color='violet' attached='bottom'>
-        <Menu inverted fluid secondary>
+      <Segment raised attached='bottom'>
+        <Menu fluid secondary>
           <Menu.Item name='eco'>
             <Icon name='file code' color='white' size='big' />
               ECO
