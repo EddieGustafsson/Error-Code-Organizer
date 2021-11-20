@@ -7,13 +7,13 @@ function Breadcrumbhead() {
     const location = useLocation();
 
     let sections = location.pathname.split('/').map((p, i, arr) => {
-        if (i === 0) return {
-            key: i,
-            content: 'Dashboard',
-            href: '/',
-            active: (i === arr.length - 1),
-            link: (i < arr.length - 1)
-        };
+        //if (i === 0) return {
+        //    key: i,
+        //    content: 'Dashboard',
+        //    href: '/',
+        //    active: (i === arr.length - 1),
+        //    link: (i < arr.length - 1)
+        //};
 
         if (p === 'project') {
             return {
