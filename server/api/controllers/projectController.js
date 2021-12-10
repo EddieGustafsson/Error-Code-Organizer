@@ -141,11 +141,12 @@ module.exports = {
         .exec()
         .then(result => {
             res.status(200).json({
-                message: 'Project delted'
+                message: 'Project deleted'
             });
             
             AuditEventController.newAuditEvent({
                 "action": "deletion",
+                "action_target_id": id,
                 "action_target": "project",
                 "action_id": id,
                 "action_value": null,
