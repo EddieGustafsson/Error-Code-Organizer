@@ -33,7 +33,7 @@ class UserRegisterForm extends Component {
         if (error !== prevProps.error) {
             // Check for register error
             if (error.id === 'REGISTER_FAIL') {
-                this.setState({ errorMessage: error.message.message });
+                this.setState({ errorMessage: error.message });
             } else {
                 this.setState({ errorMessage: null });
             }
@@ -138,7 +138,7 @@ class UserRegisterForm extends Component {
                         onClick={this.submitRegistrationForm}
                     >Register account</Button>
                 </Form>
-                { this.state.errorMessage ? <Message header='Faild to register account' content={this.state.errorMessage} negative /> : null}
+                { this.state.errorMessage ? <Message header='Faild to register account' list={this.state.errorMessage} negative /> : null}
             </div>
         )
     }
