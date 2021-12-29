@@ -129,6 +129,7 @@ class UserRegisterForm extends Component {
                             onChange={this.onChange}
                         />
                     </Form.Field>
+                    { this.state.errorMessage ? <Message header='Faild to register account' list={this.state.errorMessage} negative /> : null}
                     <Button
                         positive
                         fluid
@@ -138,7 +139,6 @@ class UserRegisterForm extends Component {
                         onClick={this.submitRegistrationForm}
                     >Register account</Button>
                 </Form>
-                { this.state.errorMessage ? <Message header='Faild to register account' list={this.state.errorMessage} negative /> : null}
             </div>
         )
     }
