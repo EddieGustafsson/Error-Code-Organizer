@@ -7,13 +7,16 @@ function Breadcrumbhead() {
     const location = useLocation();
 
     let sections = location.pathname.split('/').map((p, i, arr) => {
-        if (i === 0) return {
-            key: i,
-            content: 'Dashboard',
-            href: '/',
-            active: (i === arr.length - 1),
-            link: (i < arr.length - 1)
-        };
+
+        if (arr.length === 2 && arr[1] === '') {
+            arr.splice(1, 1);
+            return {
+                key: i,
+                content: 'Dashboard',
+                active: true,
+                link: false
+            };
+        }
 
         if (p === 'project') {
             return {
@@ -25,11 +28,19 @@ function Breadcrumbhead() {
             };
         }
 
+        if (p.match(/^[0-9a-fA-F]{24}$/)) {
+            return {
+                key: i,
+                content: '{project_name}', //TODO: get project name from db
+                active: false,
+                link: false
+            };
+        }
+
         if (p === 'user') {
             return {
                 key: i,
                 content: 'User',
-                href: '',
                 active: false,
                 link: false
             };

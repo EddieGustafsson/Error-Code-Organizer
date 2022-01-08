@@ -14,10 +14,10 @@ class Navbar extends Component {
     const { user } = this.props.auth;
 
     return (
-      <Segment inverted raised color='violet' attached='bottom'>
-        <Menu inverted fluid secondary>
+      <Segment raised attached='bottom'>
+        <Menu fluid secondary>
           <Menu.Item name='eco'>
-            <Icon name='file code' color='white' size='big' />
+            <Icon name='file code' color='violet' size='big' />
               ECO
           </Menu.Item>
 
@@ -56,12 +56,12 @@ class Navbar extends Component {
             <Dropdown item text={<Avatar maxInitials='1' name={user.username}size='30px' round='5px' />}>
               <Dropdown.Menu>
                 <Dropdown.Header content={user.name} />
-                <Dropdown.Item disabled>@{user.username}</Dropdown.Item>
+                <Dropdown.Item disabled text={"@" + user.username}/>
                 <Dropdown.Divider />
-                <Dropdown.Item as={NavLink} activeClassName="active" to={`/user/${user.username}`} exact>Profile</Dropdown.Item>
-                <Dropdown.Item as={NavLink} activeClassName="active" to={`/user/${user.username}/settings`}>Settings</Dropdown.Item>
+                <Dropdown.Item as={NavLink} activeClassName="active" to={`/user/${user.username}`} exact icon="user" text="Profile"/>
+                <Dropdown.Item as={NavLink} activeClassName="active" to={`/user/${user.username}/settings`} icon="settings" text="Settings"/>
                 <Dropdown.Divider />
-                <Dropdown.Item onClick={this.props.logout}>Logout</Dropdown.Item>
+                <Dropdown.Item onClick={this.props.logout} icon="sign-out" text="Logout" />
               </Dropdown.Menu>
             </Dropdown>
 

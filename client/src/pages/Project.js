@@ -139,7 +139,9 @@ class Project extends Component {
 
         <Header as='h5' attached='top'>Description</Header>
         <Segment attached='bottom'>
-          <ReactMarkdown source={project.description} />
+          <ReactMarkdown>
+            {project.description}
+          </ReactMarkdown>
         </Segment>
       </div>
     );
