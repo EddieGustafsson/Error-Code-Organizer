@@ -44,7 +44,7 @@ class ProjectSidebar extends Component {
     if (this.props.project.project.length === 0 || loading) {
       return (
         <div>
-          <Segment>
+          <Segment attached>
             <Accordion as={Menu} vertical secondary>
 
               <Menu.Item header align>
